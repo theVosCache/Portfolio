@@ -1,0 +1,31 @@
+version: "3"
+services:
+  web:
+    image: nginx
+    volumes:
+      - "./components/module-auth:/app"
+      - "./docker/nginx.conf:/etc/nginx/conf.d/default.conf"
+      - "./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini"
+    depends_on:
+      - php
+    ports:
+      - "8000:80"
+
+  php:
+    build:
+      context: ./components/module-auth
+      dockerfile: ../../docker/Dockerfile-php
+    image: module-auth
+    user: "1000:1000"
+    volumes:
+      - "./components/module-auth:/app"
+      - "./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini"
+  
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: somethingunique
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./docker/mysql:/var/lib/mysql"
