@@ -24,6 +24,8 @@ return static function (ECSConfig $ecsConfig): void
         'test/PrivatePropertyManipulator.php'
     ]);
 
+    $ecsConfig->sets([SetList::PSR_12]);
+
     $ecsConfig->rule(ArraySyntaxFixer::class);
     $ecsConfig->rule(DeclareStrictTypesFixer::class);
     $ecsConfig->rule(StrictComparisonFixer::class);
