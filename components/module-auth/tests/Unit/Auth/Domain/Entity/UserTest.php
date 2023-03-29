@@ -15,5 +15,9 @@ class UserTest extends TestCase
             lastName: 'de Tester',
             email: 'test@test.nl'
         );
+
+        $this->assertSame('Test', $user->getFirstName());
+        $this->assertSame('de Tester', $user->getLastName());
+        $this->assertSame('test@test.nl', $user->getEmail());
     }
 }
