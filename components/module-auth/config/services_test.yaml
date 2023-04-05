@@ -1,0 +1,12 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: false
+        public: true
+
+    App\Tests\Fixtures\UserFixture:
+        tags: ['doctrine.fixture.orm']
+
+    test.App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Domain\Repository\UserRepositoryInterface'

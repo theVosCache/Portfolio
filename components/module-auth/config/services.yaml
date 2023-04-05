@@ -4,3 +4,8 @@ services:
     _defaults:
         autowire: true
         autoconfigure: false
+
+    App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Infrastructure\Repository\UserRepository'
+
+    App\Auth\Infrastructure\Repository\UserRepository:
+        tags: ['doctrine.repository_service']

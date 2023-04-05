@@ -16,7 +16,6 @@ services:
       context: ./components/module-auth
       dockerfile: ../../docker/Dockerfile-php
     image: module-auth
-    user: "1000:1000"
     volumes:
       - "./components/module-auth:/app"
       - "./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini"
