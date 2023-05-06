@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserRegisterController
+class UserRegisterController extends AbstractBaseController
 {
     public function __construct(
         private readonly UserFactoryInterface $userFactory,
@@ -25,17 +25,19 @@ class UserRegisterController
     #[Route(path: '/register', name: 'UserRegister')]
     public function __invoke(Request $request): JsonResponse
     {
-        try {
-            $data = json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
-            return new JsonResponse(data: [], status: JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        $data = $this->getDataFromRequest($request);
+        if ($data instanceof JsonResponse){
+            return $data;
         }
 
         try {
             $userRepository = $this->entityManager->getRepository(User::class);
             $userRepository->findByEmail($data['email']);
 
-            return new JsonResponse(data: [], status: JsonResponse::HTTP_BAD_REQUEST);
+            return $this->buildErrorResponse(message: sprintf(
+                "User with email: %s already exists",
+                $data['email']
+            ));
         } catch (UserNotFoundException $userNotFoundException){
             // silent fail
         }
@@ -50,6 +52,9 @@ class UserRegisterController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        return new JsonResponse(data: [], status: JsonResponse::HTTP_CREATED);
+        return $this->buildSuccessResponse(
+            message: 'User Created',
+            statusCode: JsonResponse::HTTP_CREATED
+        );
     }
 }

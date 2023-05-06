@@ -23,6 +23,10 @@ class UserRegisterControllerTest extends DbWebTestCase
         );
 
         $this->assertResponseIsSuccessful();
+        $this->assertJsonStringEqualsJsonFile(
+            __DIR__ . '/../../../../01-responses/UserRegisterController/201-response.json',
+            $this->client->getResponse()->getContent()
+        );
     }
 
     /** @test */
@@ -39,6 +43,10 @@ class UserRegisterControllerTest extends DbWebTestCase
         );
 
         $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonStringEqualsJsonFile(
+            __DIR__ . '/../../../../01-responses/UserRegisterController/400-response.json',
+            $this->client->getResponse()->getContent()
+        );
     }
 
     /** @test */
@@ -50,6 +58,10 @@ class UserRegisterControllerTest extends DbWebTestCase
             content: "invalid-json");
 
         $this->assertResponseStatusCodeSame(422);
+        $this->assertJsonStringEqualsJsonFile(
+            __DIR__ . '/../../../../01-responses/UserRegisterController/422-response.json',
+            $this->client->getResponse()->getContent()
+        );
     }
 
 }
