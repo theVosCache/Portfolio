@@ -5,7 +5,14 @@ services:
         autowire: true
         autoconfigure: false
 
+    App\Auth\Domain\Factory\UserFactoryInterface: '@App\Auth\Application\Factory\UserFactory'
     App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Infrastructure\Repository\UserRepository'
+
+
+    App\Auth\Application\Factory\UserFactory:
+
+    App\Auth\Infrastructure\Controller\UserRegisterController:
+        tags: ['controller.service_arguments']
 
     App\Auth\Infrastructure\Repository\UserRepository:
         tags: ['doctrine.repository_service']

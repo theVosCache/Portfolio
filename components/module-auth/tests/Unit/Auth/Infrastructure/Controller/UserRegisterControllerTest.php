@@ -31,7 +31,7 @@ class UserRegisterControllerTest extends TestCase
     }
 
     /** @test */
-    public function aBadRequestResponseIsReturnedOnInvalidJson(): void
+    public function aUnprocessableResponseIsReturnedOnInvalidJson(): void
     {
         $controller = new UserRegisterController(
             userFactory: $this->createMock(UserFactoryInterface::class),
@@ -41,7 +41,7 @@ class UserRegisterControllerTest extends TestCase
         $response = $controller($this->getUserRegisterRequest(true));
 
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertSame(JsonResponse::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
     /** @test */

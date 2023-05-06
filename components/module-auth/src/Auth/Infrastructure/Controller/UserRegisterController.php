@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserRegisterController
 {
@@ -21,12 +22,13 @@ class UserRegisterController
     {
     }
 
+    #[Route(path: '/register', name: 'UserRegister')]
     public function __invoke(Request $request): JsonResponse
     {
         try {
             $data = json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            return new JsonResponse(data: [], status: JsonResponse::HTTP_BAD_REQUEST);
+            return new JsonResponse(data: [], status: JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         try {
