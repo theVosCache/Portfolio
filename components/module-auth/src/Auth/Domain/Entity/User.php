@@ -90,6 +90,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return [];
     }
 
+    /** @codeCoverageIgnore */
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
