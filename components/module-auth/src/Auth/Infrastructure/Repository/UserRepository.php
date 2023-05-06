@@ -22,7 +22,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     {
         $user = $this->findOneBy(['email' => $email]);
 
-        if (!$user instanceof User){
+        if (!$user instanceof User) {
             throw new UserNotFoundException(sprintf(
                 "User with email %s is not found",
                 $email

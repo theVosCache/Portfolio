@@ -13,7 +13,7 @@ class UserFixture extends Fixture
 {
     use PrivatePropertyManipulator;
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new User(
             firstName: 'Test',
