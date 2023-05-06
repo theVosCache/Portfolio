@@ -16,8 +16,7 @@ class UserFixture extends Fixture
 
     public function __construct(
         private readonly UserPasswordHasherInterface $userPasswordHasher
-    )
-    {
+    ) {
     }
 
     public function load(ObjectManager $manager): void

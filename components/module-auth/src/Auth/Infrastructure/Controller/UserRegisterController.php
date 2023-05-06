@@ -18,15 +18,14 @@ class UserRegisterController extends AbstractBaseController
     public function __construct(
         private readonly UserFactoryInterface $userFactory,
         private readonly EntityManagerInterface $entityManager
-    )
-    {
+    ) {
     }
 
     #[Route(path: '/register', name: 'UserRegister')]
     public function __invoke(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
-        if ($data instanceof JsonResponse){
+        if ($data instanceof JsonResponse) {
             return $data;
         }
 
@@ -38,7 +37,7 @@ class UserRegisterController extends AbstractBaseController
                 "User with email: %s already exists",
                 $data['email']
             ));
-        } catch (UserNotFoundException $userNotFoundException){
+        } catch (UserNotFoundException $userNotFoundException) {
             // silent fail
         }
 

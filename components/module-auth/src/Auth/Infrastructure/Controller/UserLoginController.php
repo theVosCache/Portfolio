@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Auth\Infrastructure\Controller;
 
 use App\Auth\Domain\Exception\UserNotFoundException;
@@ -16,15 +18,14 @@ class UserLoginController extends AbstractBaseController
         private readonly UserRepositoryInterface $userRepository,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly JWTTokenManagerInterface $JWTTokenManager
-    )
-    {
+    ) {
     }
 
     #[Route(path: '/login', name: 'UserLogin')]
     public function __invoke(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
-        if ($data instanceof JsonResponse){
+        if ($data instanceof JsonResponse) {
             return $data;
         }
 
@@ -40,7 +41,7 @@ class UserLoginController extends AbstractBaseController
         if (!$this->userPasswordHasher->isPasswordValid(
             user: $user,
             plainPassword: $data['password']
-        )){
+        )) {
             return $this->buildErrorResponse(
                 message: "Incorrect Password",
                 statusCode: JsonResponse::HTTP_UNAUTHORIZED
@@ -52,7 +53,8 @@ class UserLoginController extends AbstractBaseController
             payload: [
                 'firstName' => $user->getFirstName(),
                 'lastName' => $user->getLastName(),
-            ]);
+            ]
+        );
 
         return $this->buildSuccessResponse(
             message: 'Login Successful',

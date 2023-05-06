@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functional\Auth\Infrastructure\Controller;
 
 use App\Auth\Domain\Enums\ControllerStatusEnum;

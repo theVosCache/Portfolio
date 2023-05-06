@@ -55,7 +55,8 @@ class UserRegisterControllerTest extends DbWebTestCase
         $this->client->request(
             method: 'POST',
             uri: '/register',
-            content: "invalid-json");
+            content: "invalid-json"
+        );
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertJsonStringEqualsJsonFile(
@@ -63,5 +64,4 @@ class UserRegisterControllerTest extends DbWebTestCase
             $this->client->getResponse()->getContent()
         );
     }
-
 }
