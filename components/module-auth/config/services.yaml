@@ -11,6 +11,9 @@ services:
 
     App\Auth\Application\Factory\UserFactory:
 
+    App\Auth\Infrastructure\Controller\UserLoginController:
+        tags: ['controller.service_arguments']
+
     App\Auth\Infrastructure\Controller\UserRegisterController:
         tags: ['controller.service_arguments']
 
