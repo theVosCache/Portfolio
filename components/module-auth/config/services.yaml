@@ -7,7 +7,9 @@ services:
 
     App\Auth\Domain\Factory\UserFactoryInterface: '@App\Auth\Application\Factory\UserFactory'
     App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Infrastructure\Repository\UserRepository'
+    App\Auth\Domain\Repository\RoleRepositoryInterface: '@App\Auth\Infrastructure\Repository\RoleRepository'
 
+    App\Auth\Application\Service\SlugService:
 
     App\Auth\Application\Factory\UserFactory:
 
@@ -16,6 +18,9 @@ services:
 
     App\Auth\Infrastructure\Controller\UserRegisterController:
         tags: ['controller.service_arguments']
+
+    App\Auth\Infrastructure\Repository\RoleRepository:
+        tags: ['doctrine.repository_service']
 
     App\Auth\Infrastructure\Repository\UserRepository:
         tags: ['doctrine.repository_service']
