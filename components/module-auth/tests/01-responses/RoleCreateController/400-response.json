@@ -1,0 +1,4 @@
+{
+  "Status": "ERROR",
+  "Message": "Role with slug: test-role already exists"
+}

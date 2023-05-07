@@ -37,7 +37,7 @@ class UserRegisterController extends AbstractBaseController
                 "User with email: %s already exists",
                 $data['email']
             ));
-        } catch (UserNotFoundException $userNotFoundException) {
+        } catch (UserNotFoundException) {
             // silent fail
         }
 

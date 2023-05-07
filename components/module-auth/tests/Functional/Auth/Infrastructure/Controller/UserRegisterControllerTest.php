@@ -18,7 +18,7 @@ class UserRegisterControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/register',
             content: file_get_contents(
-                filename: __DIR__ . '/../../../../02-requests/UserRegisterPost.json'
+                filename: __DIR__ . '/../../../../02-requests/UserRegisterController/UserRegisterPost.json'
             )
         );
 
@@ -38,7 +38,7 @@ class UserRegisterControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/register',
             content: file_get_contents(
-                filename: __DIR__ . '/../../../../02-requests/UserRegisterPost.json'
+                filename: __DIR__ . '/../../../../02-requests/UserRegisterController/UserRegisterPost.json'
             )
         );
 
