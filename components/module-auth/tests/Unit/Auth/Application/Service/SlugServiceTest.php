@@ -20,7 +20,7 @@ class SlugServiceTest extends TestCase
         $this->assertSame($expectedSlug, $slugService->create($input));
     }
 
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'CamelCase' => [
