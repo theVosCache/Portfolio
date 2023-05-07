@@ -26,7 +26,7 @@ class RoleFixture extends Fixture
             slug: $this->slugService->create('Test Role')
         );
 
-        $this->setByReflection($role, 'id', 1);
+        $this->setByReflection(object: $role, property: 'id', value: 1);
 
         $manager->persist($role);
         $manager->flush();

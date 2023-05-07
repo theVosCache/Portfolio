@@ -15,7 +15,7 @@ class UserFactoryTest extends TestCase
     public function aUserCanBeCreated(): void
     {
         $userFactory = new UserFactory(
-            $this->getPasswordHasherInterfaceMock()
+            userPasswordHasher: $this->getPasswordHasherInterfaceMock()
         );
 
         $user = $userFactory->create(
@@ -25,20 +25,20 @@ class UserFactoryTest extends TestCase
             password: 'test'
         );
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('test', $user->getFirstName());
-        $this->assertSame('de Tester', $user->getLastName());
-        $this->assertSame('test@tester.nl', $user->getEmail());
-        $this->assertSame('hashed-password', $user->getPassword());
+        $this->assertInstanceOf(expected: User::class, actual: $user);
+        $this->assertSame(expected: 'test', actual: $user->getFirstName());
+        $this->assertSame(expected: 'de Tester', actual: $user->getLastName());
+        $this->assertSame(expected: 'test@tester.nl', actual: $user->getEmail());
+        $this->assertSame(expected: 'hashed-password', actual: $user->getPassword());
     }
 
     private function getPasswordHasherInterfaceMock(): UserPasswordHasherInterface
     {
-        $userPasswordHasher = $this->createMock(UserPasswordHasherInterface::class);
+        $userPasswordHasher = $this->createMock(originalClassName: UserPasswordHasherInterface::class);
 
         $userPasswordHasher->expects($this->once())
-            ->method('hashPassword')
-            ->willReturn('hashed-password');
+            ->method(constraint: 'hashPassword')
+            ->willReturn(value: 'hashed-password');
 
         return $userPasswordHasher;
     }

@@ -17,8 +17,8 @@ class IAmAliveControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/../../../../01-responses/IAmAliveController/200-response.json',
-            $client->getResponse()->getContent()
+            expectedFile: __DIR__ . '/../../../../01-responses/IAmAliveController/200-response.json',
+            actualJson: $client->getResponse()->getContent()
         );
     }
 }

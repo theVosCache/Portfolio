@@ -19,7 +19,7 @@ class UserFactory implements UserFactoryInterface
     {
         $user = new User(firstName: $firstName, lastName: $lastName, email: $email);
 
-        $user->setPassword($this->userPasswordHasher->hashPassword(user: $user, plainPassword: $password));
+        $user->setPassword(password: $this->userPasswordHasher->hashPassword(user: $user, plainPassword: $password));
 
         return $user;
     }

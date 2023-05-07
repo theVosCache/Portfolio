@@ -15,16 +15,16 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     /** @codeCoverageIgnore */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct(registry: $registry, entityClass: User::class);
     }
 
     /** @throws UserNotFoundException */
     public function findByEmail(string $email): User
     {
-        $user = $this->findOneBy(['email' => $email]);
+        $user = $this->findOneBy(criteria: ['email' => $email]);
 
         if (!$user instanceof User) {
-            throw new UserNotFoundException(sprintf(
+            throw new UserNotFoundException(message: sprintf(
                 "User with email %s is not found",
                 $email
             ));

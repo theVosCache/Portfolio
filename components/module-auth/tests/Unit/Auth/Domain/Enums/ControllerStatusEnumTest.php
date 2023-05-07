@@ -15,7 +15,7 @@ class ControllerStatusEnumTest extends TestCase
      */
     public function enumValuesAreReturnedCorrectly(ControllerStatusEnum $statusEnum, string $value): void
     {
-        $this->assertSame($statusEnum->value, $value);
+        $this->assertSame(expected: $statusEnum->value, actual: $value);
     }
 
     public static function dataProvider(): array

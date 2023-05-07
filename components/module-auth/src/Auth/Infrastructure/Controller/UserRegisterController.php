@@ -24,14 +24,14 @@ class UserRegisterController extends AbstractBaseController
     #[Route(path: '/register', name: 'UserRegister')]
     public function __invoke(Request $request): JsonResponse
     {
-        $data = $this->getDataFromRequest($request);
+        $data = $this->getDataFromRequest(request: $request);
         if ($data instanceof JsonResponse) {
             return $data;
         }
 
         try {
             $userRepository = $this->entityManager->getRepository(User::class);
-            $userRepository->findByEmail($data['email']);
+            $userRepository->findByEmail(email: $data['email']);
 
             return $this->buildErrorResponse(message: sprintf(
                 "User with email: %s already exists",

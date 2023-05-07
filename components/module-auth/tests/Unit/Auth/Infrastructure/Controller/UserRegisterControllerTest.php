@@ -24,89 +24,89 @@ class UserRegisterControllerTest extends TestCase
             entityManager: $this->getEntityManagerMock()
         );
 
-        $response = $controller($this->getUserRegisterRequest());
+        $response = $controller(request: $this->getUserRegisterRequest());
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: JsonResponse::HTTP_CREATED, actual: $response->getStatusCode());
     }
 
     /** @test */
     public function aUnprocessableResponseIsReturnedOnInvalidJson(): void
     {
         $controller = new UserRegisterController(
-            userFactory: $this->createMock(UserFactoryInterface::class),
-            entityManager: $this->createMock(EntityManagerInterface::class)
+            userFactory: $this->createMock(originalClassName: UserFactoryInterface::class),
+            entityManager: $this->createMock(originalClassName: EntityManagerInterface::class)
         );
 
-        $response = $controller($this->getUserRegisterRequest(true));
+        $response = $controller(request: $this->getUserRegisterRequest(invalid: true));
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: JsonResponse::HTTP_UNPROCESSABLE_ENTITY, actual: $response->getStatusCode());
     }
 
     /** @test */
     public function aBadRequestResponseIsReturnedOnAlreadyExistingUser(): void
     {
         $controller = new UserRegisterController(
-            userFactory: $this->createMock(UserFactoryInterface::class),
+            userFactory: $this->createMock(originalClassName: UserFactoryInterface::class),
             entityManager: $this->getEntityManagerMockWhereUserIsFound()
         );
 
-        $response = $controller($this->getUserRegisterRequest());
+        $response = $controller(request: $this->getUserRegisterRequest());
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: JsonResponse::HTTP_BAD_REQUEST, actual: $response->getStatusCode());
     }
 
     private function getEntityManagerMock(): EntityManagerInterface
     {
-        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager = $this->createMock(originalClassName: EntityManagerInterface::class);
 
-        $entityManager->expects($this->once())->method('persist');
-        $entityManager->expects($this->once())->method('flush');
+        $entityManager->expects($this->once())->method(constraint: 'persist');
+        $entityManager->expects($this->once())->method(constraint: 'flush');
         $entityManager->expects($this->once())
-            ->method('getRepository')
+            ->method(constraint: 'getRepository')
             ->with(User::class)
-            ->willReturn($this->getUserRepositoryMock());
+            ->willReturn(value: $this->getUserRepositoryMock());
 
         return $entityManager;
     }
 
     private function getEntityManagerMockWhereUserIsFound(): EntityManagerInterface
     {
-        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager = $this->createMock(originalClassName: EntityManagerInterface::class);
 
         $entityManager->expects($this->once())
-            ->method('getRepository')
+            ->method(constraint: 'getRepository')
             ->with(User::class)
-            ->willReturn($this->getUserRepositoryMock(true));
+            ->willReturn(value: $this->getUserRepositoryMock(userIsFound: true));
 
         return $entityManager;
     }
 
     private function getUserFactoryMock(): UserFactoryInterface
     {
-        $factory = $this->createMock(UserFactoryInterface::class);
+        $factory = $this->createMock(originalClassName: UserFactoryInterface::class);
 
         $factory->expects($this->once())
-            ->method('create')
-            ->willReturn($this->createMock(User::class));
+            ->method(constraint: 'create')
+            ->willReturn(value: $this->createMock(originalClassName: User::class));
 
         return $factory;
     }
 
     private function getUserRepositoryMock(bool $userIsFound = false): UserRepositoryInterface
     {
-        $repository = $this->createMock(UserRepositoryInterface::class);
+        $repository = $this->createMock(originalClassName: UserRepositoryInterface::class);
 
         if ($userIsFound) {
             $repository->expects($this->once())
-                ->method('findByEmail')
-                ->willReturn($this->createMock(User::class));
+                ->method(constraint: 'findByEmail')
+                ->willReturn(value: $this->createMock(originalClassName: User::class));
         } else {
             $repository->expects($this->once())
-                ->method('findByEmail')
-                ->willThrowException(new UserNotFoundException());
+                ->method(constraint: 'findByEmail')
+                ->willThrowException(exception: new UserNotFoundException());
         }
 
         return $repository;
@@ -114,16 +114,16 @@ class UserRegisterControllerTest extends TestCase
 
     private function getUserRegisterRequest(bool $invalid = false): Request
     {
-        $request = $this->createMock(Request::class);
+        $request = $this->createMock(originalClassName: Request::class);
 
         if ($invalid) {
             $request->expects($this->once())
-                ->method('getContent')
-                ->willReturn("invalid-json");
+                ->method(constraint: 'getContent')
+                ->willReturn(value: "invalid-json");
         } else {
             $request->expects($this->once())
-                ->method('getContent')
-                ->willReturn(json_encode([
+                ->method(constraint: 'getContent')
+                ->willReturn(value: json_encode(value: [
                     'firstName' => 'Tester',
                     'lastName' => 'de Tester',
                     'email' => 'test@test.nl',

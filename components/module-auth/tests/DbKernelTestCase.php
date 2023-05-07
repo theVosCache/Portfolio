@@ -15,6 +15,6 @@ class DbKernelTestCase extends KernelTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->databaseTool = static::getContainer()->get(id: DatabaseToolCollection::class)->get();
     }
 }

@@ -27,10 +27,10 @@ class UserFixture extends Fixture
             email: 'test@test.nl'
         );
 
-        $this->setByReflection($user, 'id', 1);
+        $this->setByReflection(object: $user, property: 'id', value: 1);
 
-        $password = $this->userPasswordHasher->hashPassword($user, 'test');
-        $user->setPassword($password);
+        $password = $this->userPasswordHasher->hashPassword(user: $user, plainPassword: 'test');
+        $user->setPassword(password: $password);
 
         $manager->persist($user);
         $manager->flush();

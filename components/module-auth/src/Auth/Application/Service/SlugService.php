@@ -8,12 +8,12 @@ class SlugService
 {
     public function create(string $input): string
     {
-        $input = preg_replace('/(?<!\ )[A-Z]/', ' $0', $input);
+        $input = preg_replace(pattern: '/(?<!\ )[A-Z]/', replacement: ' $0', subject: $input);
 
-        $input = trim($input);
+        $input = trim(string: $input);
 
-        $input = str_replace(' ', '-', $input);
+        $input = str_replace(search: ' ', replace: '-', subject: $input);
 
-        return strtolower($input);
+        return strtolower(string: $input);
     }
 }

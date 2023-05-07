@@ -17,11 +17,11 @@ class IAmAliveControllerTest extends TestCase
 
         $response = $controller();
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_OK, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: JsonResponse::HTTP_OK, actual: $response->getStatusCode());
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/../../../../01-responses/IAmAliveController/200-response.json',
-            $response->getContent()
+            expectedFile: __DIR__ . '/../../../../01-responses/IAmAliveController/200-response.json',
+            actualJson: $response->getContent()
         );
     }
 }

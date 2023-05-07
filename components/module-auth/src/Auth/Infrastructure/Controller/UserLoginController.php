@@ -24,13 +24,13 @@ class UserLoginController extends AbstractBaseController
     #[Route(path: '/login', name: 'UserLogin')]
     public function __invoke(Request $request): JsonResponse
     {
-        $data = $this->getDataFromRequest($request);
+        $data = $this->getDataFromRequest(request: $request);
         if ($data instanceof JsonResponse) {
             return $data;
         }
 
         try {
-            $user = $this->userRepository->findByEmail($data['email']);
+            $user = $this->userRepository->findByEmail(email: $data['email']);
         } catch (UserNotFoundException $e) {
             return $this->buildErrorResponse(
                 message: $e->getMessage(),

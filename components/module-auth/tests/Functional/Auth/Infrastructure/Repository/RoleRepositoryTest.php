@@ -15,23 +15,23 @@ class RoleRepositoryTest extends DbKernelTestCase
     /** @test */
     public function aRoleCanBeFoundBySlug(): void
     {
-        $this->databaseTool->loadFixtures([RoleFixture::class]);
+        $this->databaseTool->loadFixtures(classNames: [RoleFixture::class]);
 
         /** @var RoleRepositoryInterface $roleRepository */
-        $roleRepository = self::bootKernel()->getContainer()->get('test.' . RoleRepositoryInterface::class);
+        $roleRepository = self::bootKernel()->getContainer()->get(id: 'test.' . RoleRepositoryInterface::class);
 
-        $this->assertInstanceOf(Role::class, $roleRepository->findBySlug('test-role'));
+        $this->assertInstanceOf(expected: Role::class, actual: $roleRepository->findBySlug(slug: 'test-role'));
     }
 
     /** @test */
     public function aExceptionIsThrownWhenRoleIsNotFound(): void
     {
-        $this->expectException(RoleNotFoundException::class);
-        $this->databaseTool->loadFixtures([]);
+        $this->expectException(exception: RoleNotFoundException::class);
+        $this->databaseTool->loadFixtures(classNames: []);
 
         /** @var RoleRepositoryInterface $roleRepository */
-        $roleRepository = self::bootKernel()->getContainer()->get('test.' . RoleRepositoryInterface::class);
+        $roleRepository = self::bootKernel()->getContainer()->get(id: 'test.' . RoleRepositoryInterface::class);
 
-        $roleRepository->findBySlug('test-role');
+        $roleRepository->findBySlug(slug: 'test-role');
     }
 }

@@ -20,12 +20,12 @@ class RoleTest extends TestCase
             slug: "test-role"
         );
 
-        $this->setByReflection($role, 'id', 1);
+        $this->setByReflection(object: $role, property: 'id', value: 1);
 
-        $this->assertInstanceOf(Role::class, $role);
-        $this->assertSame(1, $role->getId());
-        $this->assertSame("Test Role", $role->getName());
-        $this->assertSame('test-role', $role->getSlug());
+        $this->assertInstanceOf(expected: Role::class, actual: $role);
+        $this->assertSame(expected: 1, actual: $role->getId());
+        $this->assertSame(expected: "Test Role", actual: $role->getName());
+        $this->assertSame(expected: 'test-role', actual: $role->getSlug());
     }
 
     /** @test */
@@ -36,16 +36,16 @@ class RoleTest extends TestCase
             slug: "test-role"
         );
 
-        $this->setByReflection($role, 'id', 1);
+        $this->setByReflection(object: $role, property: 'id', value: 1);
 
-        $this->assertInstanceOf(Role::class, $role);
-        $this->assertSame(1, $role->getId());
-        $this->assertSame("Test Role", $role->getName());
-        $this->assertSame('test-role', $role->getSlug());
+        $this->assertInstanceOf(expected: Role::class, actual: $role);
+        $this->assertSame(expected: 1, actual: $role->getId());
+        $this->assertSame(expected: "Test Role", actual: $role->getName());
+        $this->assertSame(expected: 'test-role', actual: $role->getSlug());
 
-        $role->setName('New Role')->setSlug('new-role');
+        $role->setName(name: 'New Role')->setSlug(slug: 'new-role');
 
-        $this->assertSame("New Role", $role->getName());
-        $this->assertSame('new-role', $role->getSlug());
+        $this->assertSame(expected: "New Role", actual: $role->getName());
+        $this->assertSame(expected: 'new-role', actual: $role->getSlug());
     }
 }

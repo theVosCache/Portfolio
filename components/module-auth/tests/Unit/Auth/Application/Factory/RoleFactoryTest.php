@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Auth\Application\Factory;
 
 use App\Auth\Application\Factory\RoleFactory;
@@ -16,10 +18,10 @@ class RoleFactoryTest extends TestCase
             slugService: new SlugService()
         );
 
-        $role = $roleFactory->create("Test Role");
+        $role = $roleFactory->create(name: "Test Role");
 
-        $this->assertInstanceOf(Role::class, $role);
-        $this->assertSame("Test Role", $role->getName());
-        $this->assertSame("test-role", $role->getSlug());
+        $this->assertInstanceOf(expected: Role::class, actual: $role);
+        $this->assertSame(expected: "Test Role", actual: $role->getName());
+        $this->assertSame(expected: "test-role", actual: $role->getSlug());
     }
 }

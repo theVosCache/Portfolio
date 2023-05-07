@@ -15,23 +15,23 @@ class UserRepositoryTest extends DbKernelTestCase
     /** @test */
     public function itCanFindAUserViaEmail(): void
     {
-        $this->databaseTool->loadFixtures([UserFixture::class]);
+        $this->databaseTool->loadFixtures(classNames: [UserFixture::class]);
 
         /** @var UserRepositoryInterface $userRepository */
-        $userRepository = self::bootKernel()->getContainer()->get('test.' . UserRepositoryInterface::class);
+        $userRepository = self::bootKernel()->getContainer()->get(id: 'test.' . UserRepositoryInterface::class);
 
-        $this->assertInstanceOf(User::class, $userRepository->findByEmail('test@test.nl'));
+        $this->assertInstanceOf(expected: User::class, actual: $userRepository->findByEmail(email: 'test@test.nl'));
     }
 
     /** @test */
     public function itThrowsAExceptionIfUserIsNotFound(): void
     {
-        $this->expectException(UserNotFoundException::class);
-        $this->databaseTool->loadFixtures([]);
+        $this->expectException(exception: UserNotFoundException::class);
+        $this->databaseTool->loadFixtures(classNames: []);
 
         /** @var UserRepositoryInterface $userRepository */
-        $userRepository = self::bootKernel()->getContainer()->get('test.' . UserRepositoryInterface::class);
+        $userRepository = self::bootKernel()->getContainer()->get(id: 'test.' . UserRepositoryInterface::class);
 
-        $userRepository->findByEmail('test@test.nl');
+        $userRepository->findByEmail(email: 'test@test.nl');
     }
 }

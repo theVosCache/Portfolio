@@ -20,15 +20,15 @@ class UserTest extends TestCase
             lastName: 'de Tester',
             email: 'test@test.nl'
         );
-        $this->setByReflection($user, 'id', 1);
+        $this->setByReflection(object: $user, property: 'id', value: 1);
 
-        $user->setPassword('password');
+        $user->setPassword(password: 'password');
 
-        $this->assertSame(1, $user->getId());
-        $this->assertSame('Test', $user->getFirstName());
-        $this->assertSame('de Tester', $user->getLastName());
-        $this->assertSame('test@test.nl', $user->getEmail());
-        $this->assertSame('password', $user->getPassword());
+        $this->assertSame(expected: 1, actual: $user->getId());
+        $this->assertSame(expected: 'Test', actual: $user->getFirstName());
+        $this->assertSame(expected: 'de Tester', actual: $user->getLastName());
+        $this->assertSame(expected: 'test@test.nl', actual: $user->getEmail());
+        $this->assertSame(expected: 'password', actual: $user->getPassword());
     }
 
     /** @test */
@@ -39,16 +39,16 @@ class UserTest extends TestCase
             lastName: 'de Tester',
             email: 'test@test.nl'
         );
-        $user->setPassword('password');
+        $user->setPassword(password: 'password');
 
-        $user->setFirstName('tester')
-            ->setLastName('last name')
-            ->setEmail('me@test.nl')
-            ->setPassword('new-password');
+        $user->setFirstName(firstName: 'tester')
+            ->setLastName(lastName: 'last name')
+            ->setEmail(email: 'me@test.nl')
+            ->setPassword(password: 'new-password');
 
-        $this->assertSame('tester', $user->getFirstName());
-        $this->assertSame('last name', $user->getLastName());
-        $this->assertSame('me@test.nl', $user->getEmail());
-        $this->assertSame('new-password', $user->getPassword());
+        $this->assertSame(expected: 'tester', actual: $user->getFirstName());
+        $this->assertSame(expected: 'last name', actual: $user->getLastName());
+        $this->assertSame(expected: 'me@test.nl', actual: $user->getEmail());
+        $this->assertSame(expected: 'new-password', actual: $user->getPassword());
     }
 }

@@ -15,16 +15,16 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
     /** @codeCoverageIgnore */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Role::class);
+        parent::__construct(registry: $registry, entityClass: Role::class);
     }
 
     /** @throws RoleNotFoundException */
     public function findBySlug(string $slug): Role
     {
-        $user = $this->findOneBy(['slug' => $slug]);
+        $user = $this->findOneBy(criteria: ['slug' => $slug]);
 
         if (!$user instanceof Role) {
-            throw new RoleNotFoundException(sprintf(
+            throw new RoleNotFoundException(message: sprintf(
                 "No role found for slug %s",
                 $slug
             ));

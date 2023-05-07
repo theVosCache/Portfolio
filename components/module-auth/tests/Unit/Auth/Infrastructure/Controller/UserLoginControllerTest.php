@@ -27,40 +27,40 @@ class UserLoginControllerTest extends TestCase
             JWTTokenManager: $this->getJWTTokenManagerMock()
         );
 
-        $response = $controller($this->getUserLoginRequest());
+        $response = $controller(request: $this->getUserLoginRequest());
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: 200, actual: $response->getStatusCode());
     }
 
     /** @test */
     public function a422IsReturnedOnInvalidJson(): void
     {
         $controller = new UserLoginController(
-            userRepository: $this->createMock(UserRepositoryInterface::class),
-            userPasswordHasher: $this->createMock(UserPasswordHasherInterface::class),
-            JWTTokenManager: $this->createMock(JWTTokenManagerInterface::class)
+            userRepository: $this->createMock(originalClassName: UserRepositoryInterface::class),
+            userPasswordHasher: $this->createMock(originalClassName: UserPasswordHasherInterface::class),
+            JWTTokenManager: $this->createMock(originalClassName: JWTTokenManagerInterface::class)
         );
 
-        $response = $controller($this->getUserLoginRequest(true));
+        $response = $controller(request: $this->getUserLoginRequest(invalid: true));
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(422, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: 422, actual: $response->getStatusCode());
     }
 
     /** @test */
     public function a404IsReturnedOnUserNotFound(): void
     {
         $controller = new UserLoginController(
-            userRepository: $this->getUserRepositoryMock(false),
-            userPasswordHasher: $this->createMock(UserPasswordHasherInterface::class),
-            JWTTokenManager: $this->createMock(JWTTokenManagerInterface::class)
+            userRepository: $this->getUserRepositoryMock(userIsFound: false),
+            userPasswordHasher: $this->createMock(originalClassName: UserPasswordHasherInterface::class),
+            JWTTokenManager: $this->createMock(originalClassName: JWTTokenManagerInterface::class)
         );
 
-        $response = $controller($this->getUserLoginRequest());
+        $response = $controller(request: $this->getUserLoginRequest());
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(404, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: 404, actual: $response->getStatusCode());
     }
 
     /** @test */
@@ -68,50 +68,50 @@ class UserLoginControllerTest extends TestCase
     {
         $controller = new UserLoginController(
             userRepository: $this->getUserRepositoryMock(),
-            userPasswordHasher: $this->getUserPasswordHasherMock(false),
-            JWTTokenManager: $this->createMock(JWTTokenManagerInterface::class)
+            userPasswordHasher: $this->getUserPasswordHasherMock(validPassword: false),
+            JWTTokenManager: $this->createMock(originalClassName: JWTTokenManagerInterface::class)
         );
 
-        $response = $controller($this->getUserLoginRequest());
+        $response = $controller(request: $this->getUserLoginRequest());
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(401, $response->getStatusCode());
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: 401, actual: $response->getStatusCode());
     }
 
     private function getJWTTokenManagerMock(): JWTTokenManagerInterface|MockObject
     {
-        $tokenManager = $this->createMock(JWTManager::class);
+        $tokenManager = $this->createMock(originalClassName: JWTManager::class);
 
         $tokenManager->expects($this->once())
-            ->method('createFromPayload')
-            ->willReturn('token');
+            ->method(constraint: 'createFromPayload')
+            ->willReturn(value: 'token');
 
         return $tokenManager;
     }
 
     private function getUserPasswordHasherMock(bool $validPassword = true): UserPasswordHasherInterface
     {
-        $passwordHasher = $this->createMock(UserPasswordHasherInterface::class);
+        $passwordHasher = $this->createMock(originalClassName: UserPasswordHasherInterface::class);
 
         $passwordHasher->expects($this->once())
-            ->method('isPasswordValid')
-            ->willReturn($validPassword);
+            ->method(constraint: 'isPasswordValid')
+            ->willReturn(value: $validPassword);
 
         return $passwordHasher;
     }
 
     private function getUserRepositoryMock(bool $userIsFound = true): UserRepositoryInterface
     {
-        $repository = $this->createMock(UserRepositoryInterface::class);
+        $repository = $this->createMock(originalClassName: UserRepositoryInterface::class);
 
         if ($userIsFound) {
             $repository->expects($this->once())
-                ->method('findByEmail')
-                ->willReturn($this->createMock(User::class));
+                ->method(constraint: 'findByEmail')
+                ->willReturn(value: $this->createMock(originalClassName: User::class));
         } else {
             $repository->expects($this->once())
-                ->method('findByEmail')
-                ->willThrowException(new UserNotFoundException());
+                ->method(constraint: 'findByEmail')
+                ->willThrowException(exception: new UserNotFoundException());
         }
 
         return $repository;
@@ -119,16 +119,16 @@ class UserLoginControllerTest extends TestCase
 
     private function getUserLoginRequest(bool $invalid = false): Request
     {
-        $request = $this->createMock(Request::class);
+        $request = $this->createMock(originalClassName: Request::class);
 
         if ($invalid) {
             $request->expects($this->once())
-                ->method('getContent')
-                ->willReturn("invalid-json");
+                ->method(constraint: 'getContent')
+                ->willReturn(value: "invalid-json");
         } else {
             $request->expects($this->once())
-                ->method('getContent')
-                ->willReturn(json_encode([
+                ->method(constraint: 'getContent')
+                ->willReturn(value: json_encode(value: [
                     'email' => 'test@test.nl',
                     'password' => 'test'
                 ]));

@@ -12,40 +12,40 @@ class UserRegisterControllerTest extends DbWebTestCase
     /** @test */
     public function aUserCanBeRegistered(): void
     {
-        $this->databaseTool->loadFixtures([]);
+        $this->databaseTool->loadFixtures(classNames: []);
 
         $this->client->request(
             method: 'POST',
             uri: '/register',
             content: file_get_contents(
-                __DIR__ . '/../../../../02-requests/UserRegisterPost.json'
+                filename: __DIR__ . '/../../../../02-requests/UserRegisterPost.json'
             )
         );
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/../../../../01-responses/UserRegisterController/201-response.json',
-            $this->client->getResponse()->getContent()
+            expectedFile: __DIR__ . '/../../../../01-responses/UserRegisterController/201-response.json',
+            actualJson: $this->client->getResponse()->getContent()
         );
     }
 
     /** @test */
     public function aUserCantBeRegisteredIfEmailIsInUse(): void
     {
-        $this->databaseTool->loadFixtures([UserFixture::class]);
+        $this->databaseTool->loadFixtures(classNames: [UserFixture::class]);
 
         $this->client->request(
             method: 'POST',
             uri: '/register',
             content: file_get_contents(
-                __DIR__ . '/../../../../02-requests/UserRegisterPost.json'
+                filename: __DIR__ . '/../../../../02-requests/UserRegisterPost.json'
             )
         );
 
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertResponseStatusCodeSame(expectedCode: 400);
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/../../../../01-responses/UserRegisterController/400-response.json',
-            $this->client->getResponse()->getContent()
+            expectedFile: __DIR__ . '/../../../../01-responses/UserRegisterController/400-response.json',
+            actualJson: $this->client->getResponse()->getContent()
         );
     }
 
@@ -58,10 +58,10 @@ class UserRegisterControllerTest extends DbWebTestCase
             content: "invalid-json"
         );
 
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseStatusCodeSame(expectedCode: 422);
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/../../../../01-responses/UserRegisterController/422-response.json',
-            $this->client->getResponse()->getContent()
+            expectedFile: __DIR__ . '/../../../../01-responses/UserRegisterController/422-response.json',
+            actualJson: $this->client->getResponse()->getContent()
         );
     }
 }

@@ -17,7 +17,7 @@ class SlugServiceTest extends TestCase
     {
         $slugService = new SlugService();
 
-        $this->assertSame($expectedSlug, $slugService->create($input));
+        $this->assertSame(expected: $expectedSlug, actual: $slugService->create($input));
     }
 
     public static function dataProvider(): array
