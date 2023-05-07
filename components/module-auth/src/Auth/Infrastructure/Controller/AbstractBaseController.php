@@ -13,14 +13,21 @@ abstract class AbstractBaseController
 {
     public function getDataFromRequest(Request $request): array|JsonResponse
     {
-        try {
-            return json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
-            return $this->buildErrorResponse(
-                message: $e->getMessage(),
-                statusCode: JsonResponse::HTTP_UNPROCESSABLE_ENTITY
-            );
+        if ($request->isMethod('POST')){
+            try {
+               return json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
+            } catch (JsonException $e) {
+                return new JsonResponse(
+                    data: [
+                        'Status' => ControllerStatusEnum::ERROR,
+                        'Message' => $e->getMessage()
+                    ],
+                    status: JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
         }
+
+        return [];
     }
 
     public function buildErrorResponse(string $message, array $data = [], int $statusCode = 400): JsonResponse

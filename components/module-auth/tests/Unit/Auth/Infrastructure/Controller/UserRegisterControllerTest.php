@@ -115,6 +115,11 @@ class UserRegisterControllerTest extends TestCase
     private function getUserRegisterRequest(bool $invalid = false): Request
     {
         $request = $this->createMock(originalClassName: Request::class);
+        
+        $request->expects($this->once())
+            ->method('isMethod')
+            ->with('POST')
+            ->willReturn(true);
 
         if ($invalid) {
             $request->expects($this->once())
