@@ -60,7 +60,7 @@ class UserRegisterControllerTest extends DbWebTestCase
 
         $this->assertResponseStatusCodeSame(expectedCode: 422);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/../../../../01-responses/UserRegisterController/422-response.json',
+            expectedFile: __DIR__ . '/../../../../01-responses/422-response.json',
             actualJson: $this->client->getResponse()->getContent()
         );
     }

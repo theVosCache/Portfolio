@@ -38,4 +38,62 @@ class UserLoginControllerTest extends DbWebTestCase
         $this->assertSame(expected: 'Test', actual: $tokenData['firstName']);
         $this->assertSame(expected: 'de Tester', actual: $tokenData['lastName']);
     }
+
+    /** @test */
+    public function a404IsReturnedWhenUserIsNotFound(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: []);
+
+        $this->client->request(
+            method: "POST",
+            uri: '/login',
+            content: file_get_contents(
+                filename: __DIR__ . "/../../../../02-requests/UserLoginController/200-request.json"
+            )
+        );
+
+        $this->assertResponseStatusCodeSame(expectedCode: 404);
+        $this->assertJsonStringEqualsJsonFile(
+            expectedFile: __DIR__ . "/../../../../01-responses/UserLoginController/404-response.json",
+            actualJson: $this->client->getResponse()->getContent()
+        );
+    }
+
+    /** @test */
+    public function a401IsReturnedWhenUserPasswordIsInvalid(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: []);
+
+        $this->client->request(
+            method: "POST",
+            uri: '/login',
+            content: file_get_contents(
+                filename: __DIR__ . "/../../../../02-requests/UserLoginController/200-request.json"
+            )
+        );
+
+        $this->assertResponseStatusCodeSame(expectedCode: 404);
+        $this->assertJsonStringEqualsJsonFile(
+            expectedFile: __DIR__ . "/../../../../01-responses/UserLoginController/404-response.json",
+            actualJson: $this->client->getResponse()->getContent()
+        );
+    }
+
+    /** @test */
+    public function a422IsReturnedWhenUserPasswordIsInvalid(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: []);
+
+        $this->client->request(
+            method: "POST",
+            uri: '/login',
+            content: "invalid-json"
+        );
+
+        $this->assertResponseStatusCodeSame(expectedCode: 422);
+        $this->assertJsonStringEqualsJsonFile(
+            expectedFile: __DIR__ . "/../../../../01-responses/422-response.json",
+            actualJson: $this->client->getResponse()->getContent()
+        );
+    }
 }

@@ -57,7 +57,7 @@ class RoleCreateControllerTest extends DbWebTestCase
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../01-responses/RoleCreateController/422-response.json",
+            expectedFile: __DIR__ . "/../../../../01-responses/422-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }
