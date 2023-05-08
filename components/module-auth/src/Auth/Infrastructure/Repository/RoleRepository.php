@@ -18,6 +18,12 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
         parent::__construct(registry: $registry, entityClass: Role::class);
     }
 
+    /** @return Role[] */
+    public function list(): array
+    {
+        return $this->findAll();
+    }
+
     /** @throws RoleNotFoundException */
     public function findBySlug(string $slug): Role
     {

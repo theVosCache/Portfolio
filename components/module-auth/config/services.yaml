@@ -16,7 +16,10 @@ services:
 
   App\Auth\Application\Factory\UserFactory:
 
-  App\Auth\Infrastructure\Controller\RoleCreateController:
+  App\Auth\Infrastructure\Controller\Roles\RoleCreateController:
+    tags: [ 'controller.service_arguments' ]
+
+  App\Auth\Infrastructure\Controller\Roles\RoleListController:
     tags: [ 'controller.service_arguments' ]
 
   App\Auth\Infrastructure\Controller\UserLoginController:

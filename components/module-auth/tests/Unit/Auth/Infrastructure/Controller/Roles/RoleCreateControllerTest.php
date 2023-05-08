@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Tests\Unit\Auth\Infrastructure\Controller;
+declare(strict_types=1);
+
+namespace App\Tests\Unit\Auth\Infrastructure\Controller\Roles;
 
 use App\Auth\Domain\Entity\Role;
 use App\Auth\Domain\Exception\RoleNotFoundException;
 use App\Auth\Domain\Factory\RoleFactoryInterface;
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
-use App\Auth\Infrastructure\Controller\RoleCreateController;
+use App\Auth\Infrastructure\Controller\Roles\RoleCreateController;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,0 +1,11 @@
+{
+  "Message": "Role List",
+  "Status": "OK",
+  "roles": [
+    {
+      "id": 1,
+      "name": "Test Role",
+      "slug": "test-role"
+    }
+  ]
+}

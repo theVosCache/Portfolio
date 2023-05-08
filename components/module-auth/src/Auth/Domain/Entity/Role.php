@@ -6,9 +6,10 @@ namespace App\Auth\Domain\Entity;
 
 use App\Auth\Infrastructure\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
-class Role
+class Role implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -54,5 +55,14 @@ class Role
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug
+        ];
     }
 }

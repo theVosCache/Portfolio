@@ -48,4 +48,28 @@ class RoleTest extends TestCase
         $this->assertSame(expected: "New Role", actual: $role->getName());
         $this->assertSame(expected: 'new-role', actual: $role->getSlug());
     }
+    
+    /** @test */
+    public function aRoleCanBeJSONSerialized(): void
+    {
+        $role = new Role(
+            name: "Test Role",
+            slug: "test-role"
+        );
+        $this->setByReflection(object: $role, property: 'id', value: 1);
+
+        $this->assertInstanceOf(expected: Role::class, actual: $role);
+        $this->assertSame(expected: 1, actual: $role->getId());
+        $this->assertSame(expected: "Test Role", actual: $role->getName());
+        $this->assertSame(expected: 'test-role', actual: $role->getSlug());
+
+        $this->assertJsonStringEqualsJsonString(
+            expectedJson: json_encode([
+                "id" => 1,
+                "name" => "Test Role",
+                "slug" => "test-role"
+            ]),
+            actualJson: json_encode($role)
+        );
+    }
 }

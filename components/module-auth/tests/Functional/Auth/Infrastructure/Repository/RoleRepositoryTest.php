@@ -13,6 +13,20 @@ use App\Tests\Fixtures\RoleFixture;
 class RoleRepositoryTest extends DbKernelTestCase
 {
     /** @test */
+    public function allRolesCanBeListed(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: [RoleFixture::class]);
+
+        /** @var RoleRepositoryInterface $roleRepository */
+        $roleRepository = self::bootKernel()->getContainer()->get(id: 'test.' . RoleRepositoryInterface::class);
+
+        $roles = $roleRepository->list();
+
+        $this->assertIsArray(actual: $roles);
+        $this->assertContainsOnly(type: Role::class, haystack: $roles);
+    }
+    
+    /** @test */
     public function aRoleCanBeFoundBySlug(): void
     {
         $this->databaseTool->loadFixtures(classNames: [RoleFixture::class]);

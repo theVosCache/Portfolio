@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Auth\Infrastructure\Controller;
+declare(strict_types=1);
+
+namespace App\Auth\Infrastructure\Controller\Roles;
 
 use App\Auth\Domain\Entity\Role;
 use App\Auth\Domain\Exception\RoleNotFoundException;
 use App\Auth\Domain\Factory\RoleFactoryInterface;
+use App\Auth\Infrastructure\Controller\AbstractBaseController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +18,7 @@ class RoleCreateController extends AbstractBaseController
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly RoleFactoryInterface $roleFactory
-    )
-    {
+    ) {
     }
 
     #[Route(path: '/role/create', name: 'RoleCreate')]
@@ -29,7 +31,7 @@ class RoleCreateController extends AbstractBaseController
 
         $role = $this->roleFactory->create($data['name']);
 
-        try{
+        try {
             $roleRepository = $this->entityManager->getRepository(Role::class);
             $roleRepository->findBySlug(slug: $role->getSlug());
 

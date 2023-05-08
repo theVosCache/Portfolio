@@ -13,9 +13,9 @@ abstract class AbstractBaseController
 {
     public function getDataFromRequest(Request $request): array|JsonResponse
     {
-        if ($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             try {
-               return json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
+                return json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
             } catch (JsonException $e) {
                 return new JsonResponse(
                     data: [
