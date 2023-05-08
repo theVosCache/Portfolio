@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Auth\Domain\Entity;
 
+use App\Auth\Domain\Entity\Role;
 use App\Auth\Domain\Entity\User;
 use App\Tests\PrivatePropertyManipulator;
 use PHPUnit\Framework\TestCase;
@@ -50,5 +51,42 @@ class UserTest extends TestCase
         $this->assertSame(expected: 'last name', actual: $user->getLastName());
         $this->assertSame(expected: 'me@test.nl', actual: $user->getEmail());
         $this->assertSame(expected: 'new-password', actual: $user->getPassword());
+    }
+
+    /** @test */
+    public function aUserHasAConnectionToRoles(): void
+    {
+        $user = new User(
+            firstName: 'Test',
+            lastName: 'de Tester',
+            email: 'test@test.nl'
+        );
+
+        $role = new Role(
+            name: 'Test Role',
+            slug: 'test-role'
+        );
+
+        $this->assertCount(
+            expectedCount: 0,
+            haystack: $user->getRolesRelations()
+        );
+
+        $user->addRole(role: $role);
+
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $user->getRolesRelations()
+        );
+        $this->assertTrue(condition: $user->hasRole(role: $role));
+
+        $user->removeRole($role);
+
+
+        $this->assertCount(
+            expectedCount: 0,
+            haystack: $user->getRolesRelations()
+        );
+        $this->assertFalse(condition: $user->hasRole(role: $role));
     }
 }

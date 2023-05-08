@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Auth\Domain\Entity;
 
 use App\Auth\Infrastructure\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -22,10 +24,15 @@ class Role implements JsonSerializable
     #[ORM\Column(name: 'slug', type: 'string', unique: true)]
     private string $slug;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'roles')]
+    private Collection $users;
+
     public function __construct(string $name, string $slug)
     {
         $this->name = $name;
         $this->slug = $slug;
+
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): int

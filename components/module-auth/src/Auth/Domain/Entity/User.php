@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Auth\Domain\Entity;
 
 use App\Auth\Infrastructure\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,11 +31,17 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(name: 'password', type: 'string')]
     private string $password;
 
+    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'users')]
+    #[ORM\JoinTable(name: 'user_role')]
+    private Collection $roles;
+
     public function __construct(string $firstName, string $lastName, string $email)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
+
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +91,32 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     {
         $this->password = $password;
         return $this;
+    }
+
+    public function getRolesRelations(): ArrayCollection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        $this->roles->add($role);
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        $this->roles->remove(
+            key: $this->roles->indexOf(element: $role)
+        );
+
+        return $this;
+    }
+
+    public function hasRole(Role $role): bool
+    {
+        return $this->roles->contains($role);
     }
 
     public function getRoles(): array
