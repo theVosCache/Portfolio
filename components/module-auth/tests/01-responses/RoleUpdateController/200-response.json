@@ -1,0 +1,9 @@
+{
+  "Status": "OK",
+  "Message": "Update successful",
+  "role": {
+    "id": 1,
+    "name": "New Role",
+    "slug": "new-role"
+  }
+}

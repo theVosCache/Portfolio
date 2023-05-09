@@ -72,20 +72,32 @@ class UserTest extends TestCase
             haystack: $user->getRolesRelations()
         );
 
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $user->getRoles()
+        );
+
         $user->addRole(role: $role);
 
         $this->assertCount(
             expectedCount: 1,
             haystack: $user->getRolesRelations()
         );
+        $this->assertCount(
+            expectedCount: 2,
+            haystack: $user->getRoles()
+        );
         $this->assertTrue(condition: $user->hasRole(role: $role));
 
         $user->removeRole($role);
 
-
         $this->assertCount(
             expectedCount: 0,
             haystack: $user->getRolesRelations()
+        );
+        $this->assertCount(
+            expectedCount: 1,
+            haystack: $user->getRoles()
         );
         $this->assertFalse(condition: $user->hasRole(role: $role));
     }
