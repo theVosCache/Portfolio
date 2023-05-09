@@ -17,7 +17,7 @@ class RoleListControllerTest extends DbWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../../01-responses/RoleListController/200-response.json",
+            expectedFile: __DIR__ . "/Responses/RoleListController/200-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }

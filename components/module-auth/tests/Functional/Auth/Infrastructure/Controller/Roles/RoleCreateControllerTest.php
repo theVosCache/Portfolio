@@ -17,13 +17,13 @@ class RoleCreateControllerTest extends DbWebTestCase
             method: "POST",
             uri: "/role/create",
             content: file_get_contents(
-                filename: __DIR__ . "/../../../../../02-requests/RoleCreateController/200-request.json"
+                filename: __DIR__ . "/Requests/role-create-request.json"
             )
         );
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../../01-responses/RoleCreateController/201-response.json",
+            expectedFile: __DIR__ . "/Responses/RoleCreateController/201-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }
@@ -36,13 +36,13 @@ class RoleCreateControllerTest extends DbWebTestCase
             method: "POST",
             uri: "/role/create",
             content: file_get_contents(
-                filename: __DIR__ . "/../../../../../02-requests/RoleCreateController/200-request.json"
+                filename: __DIR__ . "/Requests/role-create-request.json"
             )
         );
 
         $this->assertResponseStatusCodeSame(400);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../../01-responses/RoleCreateController/400-response.json",
+            expectedFile: __DIR__ . "/Responses/RoleCreateController/400-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }
@@ -59,7 +59,7 @@ class RoleCreateControllerTest extends DbWebTestCase
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../../01-responses/422-response.json",
+            expectedFile: __DIR__ . "/Responses/422-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }
