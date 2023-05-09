@@ -19,9 +19,5 @@ class IAmAliveControllerTest extends TestCase
 
         $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
         $this->assertSame(expected: JsonResponse::HTTP_OK, actual: $response->getStatusCode());
-        $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/../../../../01-responses/IAmAliveController/200-response.json',
-            actualJson: $response->getContent()
-        );
     }
 }

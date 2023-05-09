@@ -16,19 +16,8 @@ services:
 
   App\Auth\Application\Factory\UserFactory:
 
-  App\Auth\Infrastructure\Controller\Roles\RoleCreateController:
-    tags: [ 'controller.service_arguments' ]
-
-  App\Auth\Infrastructure\Controller\Roles\RoleUpdateController:
-    tags: [ 'controller.service_arguments' ]
-
-  App\Auth\Infrastructure\Controller\Roles\RoleListController:
-    tags: [ 'controller.service_arguments' ]
-
-  App\Auth\Infrastructure\Controller\UserLoginController:
-    tags: [ 'controller.service_arguments' ]
-
-  App\Auth\Infrastructure\Controller\UserRegisterController:
+  App\Auth\Infrastructure\Controller\:
+    resource: "../src/Auth/Infrastructure/Controller"
     tags: [ 'controller.service_arguments' ]
 
   App\Auth\Infrastructure\Repository\RoleRepository:
