@@ -48,7 +48,7 @@ class UserLoginControllerTest extends DbWebTestCase
             method: "POST",
             uri: '/login',
             content: file_get_contents(
-                filename: __DIR__ ."/Request/user-login-request.json"
+                filename: __DIR__ . "/Request/user-login-request.json"
             )
         );
 

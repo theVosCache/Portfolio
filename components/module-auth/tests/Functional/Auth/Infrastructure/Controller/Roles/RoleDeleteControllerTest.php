@@ -7,56 +7,48 @@ namespace App\Tests\Functional\Auth\Infrastructure\Controller\Roles;
 use App\Tests\DbWebTestCase;
 use App\Tests\Fixtures\RoleFixture;
 
-class RoleUpdateControllerTest extends DbWebTestCase
+class RoleDeleteControllerTest extends DbWebTestCase
 {
     /** @test */
-    public function aRoleCanBeUpdated(): void
+    public function aRoleCanBeDeleted(): void
     {
         $this->databaseTool->loadFixtures(classNames: [RoleFixture::class]);
 
         $this->client->request(
-            method: 'POST',
-            uri: '/role/update',
-            content: file_get_contents(
-                filename: __DIR__ . '/Requests/role-update-request.json'
-            )
+            method: "POST",
+            uri: "/role/delete",
+            content: file_get_contents(__DIR__ . '/Requests/role-delete-request.json')
         );
 
         $this->assertResponseIsSuccessful();
+    }
+
+    /** @test */
+    public function aHTTP400IsReturnedWhenRoleNotFound(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: []);
+
+        $this->client->request(
+            method: "POST",
+            uri: "/role/delete",
+            content: file_get_contents(__DIR__ . '/Requests/role-delete-request.json')
+        );
+
+        $this->assertResponseStatusCodeSame(expectedCode: 400);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/Responses/RoleUpdateController/200-response.json',
+            expectedFile: __DIR__ . '/Responses/RoleDeleteController/400-response.json',
             actualJson: $this->client->getResponse()->getContent()
         );
     }
 
     /** @test */
-    public function aRoleCantBeUpdatedWhenRoleNotFound(): void
+    public function aHTTP422IsReturnedOnInvalidJson(): void
     {
         $this->databaseTool->loadFixtures(classNames: []);
 
         $this->client->request(
-            method: 'POST',
-            uri: '/role/update',
-            content: file_get_contents(
-                filename: __DIR__ . '/Requests/role-update-request.json'
-            )
-        );
-
-        $this->assertResponseStatusCodeSame(expectedCode: 404);
-        $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/Responses/RoleUpdateController/404-response.json',
-            actualJson: $this->client->getResponse()->getContent()
-        );
-    }
-
-    /** @test */
-    public function a422IsReturnedOnInvalidJson(): void
-    {
-        $this->databaseTool->loadFixtures(classNames: []);
-
-        $this->client->request(
-            method: 'POST',
-            uri: '/role/update',
+            method: "POST",
+            uri: "/role/delete",
             content: "invalid-json"
         );
 

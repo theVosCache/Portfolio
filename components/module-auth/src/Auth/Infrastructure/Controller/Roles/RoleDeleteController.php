@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Controller\Roles;
 
-use App\Auth\Application\Service\SlugService;
 use App\Auth\Domain\Entity\Role;
 use App\Auth\Domain\Exception\RoleNotFoundException;
 use App\Auth\Infrastructure\Controller\AbstractBaseController;
@@ -13,15 +12,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RoleUpdateController extends AbstractBaseController
+class RoleDeleteController extends AbstractBaseController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly SlugService $slugService
+        private readonly EntityManagerInterface $entityManager
     ) {
     }
 
-    #[Route(path: '/role/update', name: 'RoleUpdate')]
+    #[Route(path: '/role/delete', name: 'RoleDelete')]
     public function __invoke(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest(request: $request);
@@ -32,23 +30,19 @@ class RoleUpdateController extends AbstractBaseController
         $roleRepository = $this->entityManager->getRepository(Role::class);
 
         try {
-            $role = $roleRepository->findBySlug(slug: $data['slug']);
-        } catch (RoleNotFoundException $exception) {
+            $role = $roleRepository->findBySlug($data['slug']);
+        } catch (RoleNotFoundException $roleNotFoundException) {
             return $this->buildErrorResponse(
-                message: $exception->getMessage(),
-                statusCode: JsonResponse::HTTP_NOT_FOUND
+                message: sprintf(
+                    "Role Not Found: %s",
+                    $roleNotFoundException->getMessage()
+                )
             );
         }
 
-        $role->setName(name: $data['name'])->setSlug(slug: $this->slugService->create(input: $data['name']));
-
+        $this->entityManager->remove($role);
         $this->entityManager->flush();
 
-        return $this->buildSuccessResponse(
-            message: "Update successful",
-            data: [
-                'role' => $role
-            ]
-        );
+        return new JsonResponse(status: JsonResponse::HTTP_NO_CONTENT);
     }
 }

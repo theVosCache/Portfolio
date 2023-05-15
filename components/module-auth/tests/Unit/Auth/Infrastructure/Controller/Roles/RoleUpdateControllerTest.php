@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Auth\Infrastructure\Controller\Roles;
 
 use App\Auth\Application\Service\SlugService;
@@ -60,7 +62,7 @@ class RoleUpdateControllerTest extends TestCase
     {
         $entityManager = $this->createMock(originalClassName: EntityManagerInterface::class);
 
-        if ($roleFound){
+        if ($roleFound) {
             $entityManager->expects($this->once())
                 ->method(constraint: 'getRepository')
                 ->with(Role::class)
@@ -82,7 +84,7 @@ class RoleUpdateControllerTest extends TestCase
     {
         $roleRepository = $this->createMock(originalClassName: RoleRepositoryInterface::class);
 
-        if ($roleFound){
+        if ($roleFound) {
             $roleRepository->expects($this->once())
                 ->method(constraint: 'findBySlug')
                 ->willReturn($this->createMock(originalClassName: Role::class));

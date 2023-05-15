@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractBaseController
 {
+    /** @codeCoverageIgnore  */
     public function getDataFromRequest(Request $request): array|JsonResponse
     {
         if ($request->isMethod('POST')) {

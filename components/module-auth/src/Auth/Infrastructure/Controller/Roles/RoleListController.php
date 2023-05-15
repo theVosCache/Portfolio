@@ -19,12 +19,10 @@ class RoleListController extends AbstractBaseController
     #[Route(path: '/roles', name: 'RoleList')]
     public function __invoke(): JsonResponse
     {
-        $roles = $this->roleRepository->list();
-
         return $this->buildSuccessResponse(
             message: "Role List",
             data: [
-                'roles' => $roles
+                'roles' => $this->roleRepository->list()
             ]
         );
     }
