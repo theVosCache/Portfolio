@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Auth\Infrastructure\Controller;
+namespace App\Tests\Functional\Auth\Infrastructure\Controller\Auth;
 
 use App\Auth\Domain\Enums\ControllerStatusEnum;
 use App\Tests\DbWebTestCase;
@@ -20,7 +20,7 @@ class UserLoginControllerTest extends DbWebTestCase
             method: "POST",
             uri: '/login',
             content: file_get_contents(
-                filename: __DIR__ . "/../../../../02-requests/UserLoginController/200-request.json"
+                filename: __DIR__ . "/Request/user-login-request.json"
             )
         );
 
@@ -48,13 +48,13 @@ class UserLoginControllerTest extends DbWebTestCase
             method: "POST",
             uri: '/login',
             content: file_get_contents(
-                filename: __DIR__ . "/../../../../02-requests/UserLoginController/200-request.json"
+                filename: __DIR__ ."/Request/user-login-request.json"
             )
         );
 
         $this->assertResponseStatusCodeSame(expectedCode: 404);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../01-responses/UserLoginController/404-response.json",
+            expectedFile: __DIR__ . "/Response/UserLoginController/404-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }
@@ -68,13 +68,13 @@ class UserLoginControllerTest extends DbWebTestCase
             method: "POST",
             uri: '/login',
             content: file_get_contents(
-                filename: __DIR__ . "/../../../../02-requests/UserLoginController/200-request.json"
+                filename: __DIR__ . "/Request/user-login-request.json"
             )
         );
 
         $this->assertResponseStatusCodeSame(expectedCode: 404);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../01-responses/UserLoginController/404-response.json",
+            expectedFile: __DIR__ . "/Response/UserLoginController/404-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }
@@ -92,7 +92,7 @@ class UserLoginControllerTest extends DbWebTestCase
 
         $this->assertResponseStatusCodeSame(expectedCode: 422);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . "/../../../../01-responses/422-response.json",
+            expectedFile: __DIR__ . "/Response/422-response.json",
             actualJson: $this->client->getResponse()->getContent()
         );
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Auth\Infrastructure\Controller;
+namespace App\Tests\Functional\Auth\Infrastructure\Controller\Auth;
 
 use App\Tests\DbWebTestCase;
 use App\Tests\Fixtures\UserFixture;
@@ -18,13 +18,13 @@ class UserRegisterControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/register',
             content: file_get_contents(
-                filename: __DIR__ . '/../../../../02-requests/UserRegisterController/UserRegisterPost.json'
+                filename: __DIR__ . '/Request/user-register-request.json'
             )
         );
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/../../../../01-responses/UserRegisterController/201-response.json',
+            expectedFile: __DIR__ . '/Response/UserRegisterController/201-response.json',
             actualJson: $this->client->getResponse()->getContent()
         );
     }
@@ -38,13 +38,13 @@ class UserRegisterControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/register',
             content: file_get_contents(
-                filename: __DIR__ . '/../../../../02-requests/UserRegisterController/UserRegisterPost.json'
+                filename: __DIR__ . '/Request/user-register-request.json'
             )
         );
 
         $this->assertResponseStatusCodeSame(expectedCode: 400);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/../../../../01-responses/UserRegisterController/400-response.json',
+            expectedFile: __DIR__ . '/Response/UserRegisterController/400-response.json',
             actualJson: $this->client->getResponse()->getContent()
         );
     }
@@ -60,7 +60,7 @@ class UserRegisterControllerTest extends DbWebTestCase
 
         $this->assertResponseStatusCodeSame(expectedCode: 422);
         $this->assertJsonStringEqualsJsonFile(
-            expectedFile: __DIR__ . '/../../../../01-responses/422-response.json',
+            expectedFile: __DIR__ . '/Response/422-response.json',
             actualJson: $this->client->getResponse()->getContent()
         );
     }

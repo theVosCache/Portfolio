@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Infrastructure\Controller;
+namespace App\Auth\Infrastructure\Controller\Auth;
 
 use App\Auth\Domain\Entity\User;
 use App\Auth\Domain\Exception\UserNotFoundException;
 use App\Auth\Domain\Factory\UserFactoryInterface;
+use App\Auth\Infrastructure\Controller\AbstractBaseController;
 use Doctrine\ORM\EntityManagerInterface;
-use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

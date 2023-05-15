@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Auth\Infrastructure\Controller;
+namespace App\Tests\Unit\Auth\Infrastructure\Controller\Auth;
 
 use App\Auth\Domain\Entity\User;
 use App\Auth\Domain\Exception\UserNotFoundException;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
-use App\Auth\Infrastructure\Controller\UserLoginController;
+use App\Auth\Infrastructure\Controller\Auth\UserLoginController;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
