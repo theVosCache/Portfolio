@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Auth\Infrastructure\Controller;
+namespace App\Tests\Unit\Auth\Infrastructure\Controller\Users;
 
+use App\Auth\Infrastructure\Controller\Users\UserRoleUpdateController;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +22,16 @@ class UserRoleUpdateControllerTest extends TestCase
         $response = $controller(request: $this->getRequestMock());
 
         $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
-        $this->assertSame(expected: JsonResponse::HTTP_OK, actual: $response->getStatusCode());
+        $this->assertSame(expected: JsonResponse::HTTP_NO_CONTENT, actual: $response->getStatusCode());
+    }
+
+    private function getEntityManagerMock(): EntityManagerInterface
+    {
+        $entityManager = $this->createMock(originalClassName: EntityManagerInterface::class);
+
+
+
+        return $entityManager;
     }
 
     private function getRequestMock(bool $invalid = false): Request
