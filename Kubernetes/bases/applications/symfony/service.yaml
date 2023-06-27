@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio-auth
+spec:
+  ports:
+    - name: php-fpm
+      protocol: TCP
+      port: 9000
+  selector:
+    app: portfolio-auth

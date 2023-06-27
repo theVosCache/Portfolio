@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-auth
+spec:
+  selector:
+    matchLabels:
+      app: portfolio-auth
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: portfolio-auth
+    spec:
+      volumes:
+        - name: shared-files
+          hostPath:
+            path: /home/matthijs/Project/MDV/portfolio/components/module-auth
+      containers:
+        - name: portfolio-auth-nginx
+          image: portfolio-auth-nginx:latest
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 80
+        - name: portfolio-auth-php
+          image: portfolio-mod-auth:latest
+          imagePullPolicy: Never
+          ports:
+            - name: php-fpm
+              containerPort: 9000
+          volumeMounts:
+            - name: shared-files
+              mountPath: /app
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+#          readinessProbe:
+#            httpGet:
+#              path: /i-am-alive
+#              port: http
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
+#          livenessProbe:
+#            httpGet:
+#              path: /i-am-alive
+#              port: http
+#            initialDelaySeconds: 10
+#            timeoutSeconds: 10
+          securityContext:
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          lifecycle:
+            preStop:
+              exec:
+                # Give Kubernetes 5 seconds to stop traffic to this pod before terminating it
+                command:
+                  - /bin/sleep
+                  - "5"

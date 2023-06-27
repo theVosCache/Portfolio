@@ -10,6 +10,9 @@ services:
   App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Infrastructure\Repository\UserRepository'
   App\Auth\Domain\Repository\RoleRepositoryInterface: '@App\Auth\Infrastructure\Repository\RoleRepository'
 
+  App\Auth\Application\EventListener\PostControllerDataListener:
+    tags: [ 'kernel.event_subscriber' ]
+
   App\Auth\Application\Service\SlugService:
 
   App\Auth\Application\Factory\RoleFactory:
