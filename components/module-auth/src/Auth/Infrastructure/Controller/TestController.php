@@ -8,12 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractBasePostController
 {
-    protected array $dataFields = [
-      'test',
-      'user',
-      'email'
-    ];
-
     #[Route(path: '/test', name: 'test_controller')]
     public function __invoke(Request $request): JsonResponse
     {
