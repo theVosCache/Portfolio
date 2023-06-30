@@ -1,0 +1,12 @@
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: false
+
+  App\Validation\Application\Manager\RequestValidationManager:
+    arguments: !tagged_iterator 'mdv.validator.request'
+
+  App\Validation\Domain\RequestValidators:
+      resource: '../src/Validation/Domain/RequestValidators'
+      tags: [ 'mdv.validator.request' ]

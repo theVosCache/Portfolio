@@ -9,6 +9,13 @@ class RequestValidationManager
 {
     private array $requestValidators = [];
 
+    public function __construct(iterable $requestValidators)
+    {
+        foreach ($requestValidators as $validator){
+            $this->addValidator($validator);
+        }
+    }
+
     public function addValidator(AbstractValidator $validator): void
     {
         $this->requestValidators[$validator->getTestCase()] = $validator;

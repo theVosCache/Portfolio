@@ -15,4 +15,6 @@ abstract class AbstractValidator
     {
         return $this->testCase;
     }
+
+    abstract public function setData(array $data): void;
 }

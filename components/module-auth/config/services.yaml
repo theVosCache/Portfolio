@@ -1,5 +1,8 @@
 parameters:
 
+imports:
+  - { resource: services/ }
+
 services:
   _defaults:
     autowire: true
