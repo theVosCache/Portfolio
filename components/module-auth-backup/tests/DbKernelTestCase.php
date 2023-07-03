@@ -6,19 +6,15 @@ namespace App\Tests;
 
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class DbWebTestCase extends WebTestCase
+class DbKernelTestCase extends KernelTestCase
 {
     protected AbstractDatabaseTool $databaseTool;
-
-    protected KernelBrowser $client;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->client = $this->createClient();
         $this->databaseTool = static::getContainer()->get(id: DatabaseToolCollection::class)->get();
     }
 }

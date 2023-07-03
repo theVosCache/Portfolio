@@ -7,13 +7,13 @@ namespace App\IAmAlive\Infrastructure\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route(path: '/i-am-alive', name: 'IAmAlive')]
 class IAmAliveController
 {
-    #[Route(path: '/i-am-alive', name: 'IAmAlive')]
     public function __invoke(): JsonResponse
     {
-        return new JsonResponse(data: [
-            'status' => 'I Am Alive'
-        ], status: JsonResponse::HTTP_OK);
+        return new JsonResponse([
+            'Status' => 'OK'
+        ], JsonResponse::HTTP_OK);
     }
 }

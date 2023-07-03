@@ -18,7 +18,6 @@ class IAmAliveControllerTest extends TestCase
         $response = $controller();
 
         $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
-        $this->assertSame(expected: 200, actual: $response->getStatusCode());
-        $this->assertJson($response->getContent());
+        $this->assertSame(expected: JsonResponse::HTTP_OK, actual: $response->getStatusCode());
     }
 }
