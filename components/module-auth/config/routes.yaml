@@ -1,5 +1,5 @@
-IAmAliveController:
+controllers:
     resource:
-        path: ../src/IAmAlive/Infrastructure/Controller/
-        namespace: App\IAmAlive\Infrastructure\Controller
+        path: ../src/Controller/
+        namespace: App\Controller
     type: attribute
