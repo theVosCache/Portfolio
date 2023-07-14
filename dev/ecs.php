@@ -14,6 +14,18 @@ use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return static function (ECSConfig $ecsConfig): void
 {
+    $ecsConfig->paths([
+        'src', 'tests'
+    ]);
+
+    $ecsConfig->skip([
+        'src/Kernel.php',
+        'tests/bootstrap.php',
+        'test/PrivatePropertyManipulator.php'
+    ]);
+
+    $ecsConfig->sets([SetList::PSR_12]);
+
     $ecsConfig->rule(ArraySyntaxFixer::class);
     $ecsConfig->rule(DeclareStrictTypesFixer::class);
     $ecsConfig->rule(StrictComparisonFixer::class);
