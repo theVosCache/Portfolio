@@ -7,3 +7,7 @@ services:
     public: true
 
   test.validator: '@validator'
+
+  App\Tests\DataFixtures\:
+    resource: '../tests/DataFixtures'
+    tags: [ 'doctrine.fixture.orm' ]
