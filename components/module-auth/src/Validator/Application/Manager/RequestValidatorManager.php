@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Validator\Application\Manager;
 
 use App\Validator\Domain\RequestValidatorInterface;
@@ -30,7 +32,7 @@ class RequestValidatorManager
 
             $errors = $this->validator->validate($validator);
 
-            if (count($errors) == 0){
+            if (count($errors) === 0) {
                 return $validator;
             }
         }

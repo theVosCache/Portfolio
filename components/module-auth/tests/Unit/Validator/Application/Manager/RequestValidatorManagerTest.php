@@ -49,7 +49,7 @@ class RequestValidatorManagerTest extends TestCase
 
         $manager->addValidator(validator: $rv);
 
-        $requestValidator = $manager->validate(requestName: 'test', data: ['test'=>'one']);
+        $requestValidator = $manager->validate(requestName: 'test', data: ['test' => 'one']);
 
         $this->assertInstanceOf(expected: RequestValidatorInterface::class, actual: $requestValidator);
     }
@@ -61,7 +61,7 @@ class RequestValidatorManagerTest extends TestCase
             validator: $this->createMock(ValidatorInterface::class)
         );
 
-        $valid = $manager->validate(requestName: 'test', data: ['test'=>'one']);
+        $valid = $manager->validate(requestName: 'test', data: ['test' => 'one']);
 
         $this->assertFalse(condition: $valid);
     }

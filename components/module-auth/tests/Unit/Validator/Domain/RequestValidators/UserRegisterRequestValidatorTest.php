@@ -36,7 +36,7 @@ class UserRegisterRequestValidatorTest extends KernelTestCase
         $validator->setData($data);
 
         $errors = $innerValidator->validate($validator);
-        $errorCheck = count($errors) == 0;
+        $errorCheck = count($errors) === 0;
 
         $this->assertSame(expected: $valid, actual: $errorCheck);
     }

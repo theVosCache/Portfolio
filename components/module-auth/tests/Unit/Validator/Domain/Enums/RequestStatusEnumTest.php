@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Validator\Domain\Enums;
 
 use App\Validator\Domain\Enums\RequestStatusEnum;
@@ -14,8 +16,7 @@ class RequestStatusEnumTest extends TestCase
     public function enumValuesAreCorrect(
         RequestStatusEnum $enumValue,
         string $expectedValue
-    ): void
-    {
+    ): void {
         $this->assertSame(expected: $expectedValue, actual: $enumValue->value);
     }
 

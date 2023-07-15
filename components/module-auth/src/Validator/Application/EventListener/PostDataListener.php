@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Validator\Application\EventListener;
 
 use App\Validator\Application\Manager\RequestValidatorManager;
@@ -28,7 +30,7 @@ class PostDataListener implements EventSubscriberInterface
             $controller = $controller[0];
         }
 
-        if ($controller instanceof PostControllerInterface){
+        if ($controller instanceof PostControllerInterface) {
             if ($request->isMethod('POST')) {
                 try {
                     $data = json_decode(
@@ -42,7 +44,7 @@ class PostDataListener implements EventSubscriberInterface
                         data: $data['data']
                     );
 
-                    if ($requestValidator !== false){
+                    if ($requestValidator !== false) {
                         $controller->setData($requestValidator);
                     } else {
                         $event->setController(function () {
