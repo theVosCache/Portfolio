@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\DataFixtures;
 
 use App\Auth\Domain\Entity\User;
@@ -11,7 +13,7 @@ class UserFixture extends Fixture
 {
     use PrivatePropertyManipulator;
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new User(
             name: 'test de Tester',

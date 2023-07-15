@@ -11,3 +11,5 @@ services:
   App\Tests\DataFixtures\:
     resource: '../tests/DataFixtures'
     tags: [ 'doctrine.fixture.orm' ]
+
+  test.App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Domain\Repository\UserRepositoryInterface'

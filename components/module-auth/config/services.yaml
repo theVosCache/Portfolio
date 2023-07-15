@@ -10,3 +10,8 @@ services:
 
   App\IAmAlive\Infrastructure\Controller\IAmAliveController:
     tags: [ 'controller.service_arguments' ]
+
+  App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Infrastructure\Repository\UserRepository'
+
+  App\Auth\Infrastructure\Repository\:
+    resource: '../src/Auth/Infrastructure/Repository/'
