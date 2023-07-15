@@ -19,19 +19,20 @@ class RequestValidatorManager
         }
     }
 
-    public function validate(string $requestName, array $data): bool
+    public function validate(string $requestName, array $data): RequestValidatorInterface|bool
     {
         foreach ($this->requestValidators as $validator) {
             if ($validator->getRequestName() !== $requestName) {
                 continue;
             }
 
-            $newValidator = clone $validator;
-            $newValidator->setData($data);
+            $validator->setData($data);
 
-            $errors = $this->validator->validate($newValidator);
+            $errors = $this->validator->validate($validator);
 
-            return count($errors) == 0;
+            if (count($errors) == 0){
+                return $validator;
+            }
         }
 
         return false;

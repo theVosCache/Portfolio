@@ -1,0 +1,17 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $requestValidators: !tagged_iterator 'request.validators'
+
+  App\Validator\Application\EventListener\PostDataListener:
+    tags: [ 'kernel.event_subscriber' ]
+
+  App\Validator\Application\Manager\RequestValidatorManager:
+
+  App\Validator\Domain\RequestValidators\:
+    resource: '../../src/Validator/Domain/RequestValidators/'
+    tags: [ 'request.validators' ]

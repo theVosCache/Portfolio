@@ -49,9 +49,9 @@ class RequestValidatorManagerTest extends TestCase
 
         $manager->addValidator(validator: $rv);
 
-        $valid = $manager->validate(requestName: 'test', data: ['test'=>'one']);
+        $requestValidator = $manager->validate(requestName: 'test', data: ['test'=>'one']);
 
-        $this->assertTrue(condition: $valid);
+        $this->assertInstanceOf(expected: RequestValidatorInterface::class, actual: $requestValidator);
     }
 
     /** @test */
