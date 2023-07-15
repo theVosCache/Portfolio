@@ -11,15 +11,18 @@ class RequestValidatorManager
     private array $requestValidators = [];
 
     public function __construct(
-        private ValidatorInterface $validator
-    )
-    {
+        private readonly ValidatorInterface $validator,
+        iterable $requestValidators = []
+    ) {
+        foreach ($requestValidators as $requestValidator) {
+            $this->requestValidators[] = $requestValidator;
+        }
     }
 
     public function validate(string $requestName, array $data): bool
     {
         foreach ($this->requestValidators as $validator) {
-            if ($validator->getRequestName() !== $requestName){
+            if ($validator->getRequestName() !== $requestName) {
                 continue;
             }
 
