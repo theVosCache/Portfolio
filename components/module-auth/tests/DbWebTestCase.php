@@ -19,6 +19,8 @@ class DbWebTestCase extends WebTestCase
     {
         parent::setUp();
         $this->client = $this->createClient();
-        $this->databaseTool = static::getContainer()->get(id: DatabaseToolCollection::class)->get();
+        /** @var AbstractDatabaseTool $databaseTool */
+        $databaseTool = static::getContainer()->get(id: DatabaseToolCollection::class)->get();
+        $this->databaseTool = $databaseTool;
     }
 }

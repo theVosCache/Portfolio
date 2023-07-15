@@ -13,11 +13,13 @@ use App\Validator\Domain\RequestValidatorInterface;
 use App\Validator\Domain\RequestValidators\UserRegisterRequestValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController implements PostControllerInterface
 {
     private UserRegisterRequestValidator $requestValidator;
 
+    #[Route(path: '/user/register', name: 'user_register')]
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly EntityManagerInterface $entityManager,

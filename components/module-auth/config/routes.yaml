@@ -3,3 +3,9 @@ IAmAlive:
         path: ../src/IAmAlive/Infrastructure/Controller/
         namespace: App\IAmAlive\Infrastructure\Controller
     type: attribute
+
+Auth:
+    resource:
+        path: ../src/Auth/Infrastructure/Controller/
+        namespace: App\Auth\Infrastructure\Controller
+    type: attribute
