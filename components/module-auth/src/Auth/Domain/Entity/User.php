@@ -6,11 +6,12 @@ namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSerializable
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -79,5 +80,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email
+        ];
     }
 }

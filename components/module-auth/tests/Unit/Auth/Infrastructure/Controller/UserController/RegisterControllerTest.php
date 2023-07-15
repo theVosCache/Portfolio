@@ -24,15 +24,26 @@ class RegisterControllerTest extends TestCase
         $response = $controller();
 
         $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
-        $this->assertSame(expected: JsonResponse::HTTP_CREATED, actual: $response->getStatusCode());
+        $this->assertSame(expected: JsonResponse::HTTP_OK, actual: $response->getStatusCode());
     }
 
-    private function getRegisterController(): RegisterController
+    /** @test */
+    public function aBadRequestIsReturnedWhenUserEmailExists(): void
+    {
+        $controller = $this->getRegisterController(userFound: true);
+
+        $response = $controller();
+
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: JsonResponse::HTTP_BAD_REQUEST, actual: $response->getStatusCode());
+    }
+
+    private function getRegisterController(bool $userFound = false): RegisterController
     {
         $registerController = new RegisterController(
-            userRepository: $this->getUserRepositoryInterfaceMock(),
+            userRepository: $this->getUserRepositoryInterfaceMock(userFound: $userFound),
             entityManager: $this->createMock(EntityManagerInterface::class),
-            userFactory: $this->getUserFactoryMock()
+            userFactory: $this->getUserFactoryMock(create: !$userFound)
         );
 
         $userRegisterRequestValidator = new UserRegisterRequestValidator();
@@ -47,13 +58,15 @@ class RegisterControllerTest extends TestCase
         return $registerController;
     }
 
-    private function getUserFactoryMock(): UserFactory
+    private function getUserFactoryMock(bool $create = true): UserFactory
     {
         $factory = $this->createMock(originalClassName: UserFactory::class);
 
-        $factory->expects($this->once())
-            ->method(constraint: 'create')
-            ->willReturn($this->createMock(User::class));
+        if ($create) {
+            $factory->expects($this->once())
+                ->method(constraint: 'create')
+                ->willReturn($this->createMock(User::class));
+        }
 
         return $factory;
     }

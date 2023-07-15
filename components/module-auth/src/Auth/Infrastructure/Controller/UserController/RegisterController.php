@@ -7,6 +7,7 @@ namespace App\Auth\Infrastructure\Controller\UserController;
 use App\Auth\Application\Factory\UserFactory;
 use App\Auth\Domain\Exception\UserNotFoundException;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
+use App\Validator\Domain\Enums\RequestStatusEnum;
 use App\Validator\Domain\PostControllerInterface;
 use App\Validator\Domain\RequestValidatorInterface;
 use App\Validator\Domain\RequestValidators\UserRegisterRequestValidator;
@@ -30,7 +31,7 @@ class RegisterController implements PostControllerInterface
             $this->userRepository->findByEmail($this->requestValidator->email);
 
             return new JsonResponse(data: [
-                'status' => 'error',
+                'status' => RequestStatusEnum::ERROR,
                 'message' => 'User Already Registered'
             ], status: JsonResponse::HTTP_BAD_REQUEST);
         } catch (UserNotFoundException $e) {
@@ -46,7 +47,11 @@ class RegisterController implements PostControllerInterface
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        return new JsonResponse(data: [], status: JsonResponse::HTTP_CREATED);
+        return new JsonResponse(data: [
+            'status' => RequestStatusEnum::OK,
+            'message' => 'User Created',
+            'user' => $user
+        ], status: JsonResponse::HTTP_OK);
     }
 
     public function setData(RequestValidatorInterface $data): void
