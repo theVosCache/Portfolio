@@ -12,4 +12,7 @@ services:
     resource: '../tests/DataFixtures'
     tags: [ 'doctrine.fixture.orm' ]
 
+  test.Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface: '@lexik_jwt_authentication.encoder.lcobucci'
+  test.App\Auth\Application\Service\UserJWTTokenGeneratorService: '@App\Auth\Application\Service\UserJWTTokenGeneratorService'
+
   test.App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Domain\Repository\UserRepositoryInterface'
