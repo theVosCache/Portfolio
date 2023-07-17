@@ -19,7 +19,6 @@ class RegisterController implements PostControllerInterface
 {
     private UserRegisterRequestValidator $requestValidator;
 
-    #[Route(path: '/user/register', name: 'user_register')]
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly EntityManagerInterface $entityManager,
@@ -27,6 +26,7 @@ class RegisterController implements PostControllerInterface
     ) {
     }
 
+    #[Route(path: '/user/register', name: 'user_register')]
     public function __invoke(): JsonResponse
     {
         try {

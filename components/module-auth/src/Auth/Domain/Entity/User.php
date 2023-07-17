@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\UserRepositoryInterface;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -24,11 +25,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     #[ORM\Column(type: 'string')]
     private string $password;
 
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $updatedAt;
+
     public function __construct(string $name, string $email, string $password)
     {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getName(): string
@@ -39,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setName(string $name): self
     {
         $this->name = $name;
+        $this->updatedAt = new DateTime();
 
         return $this;
     }
@@ -51,6 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setEmail(string $email): self
     {
         $this->email = $email;
+        $this->updatedAt = new DateTime();
 
         return $this;
     }
@@ -63,7 +80,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        $this->updatedAt = new DateTime();
 
+        return $this;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): User
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTime $updatedAt): User
+    {
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 
