@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSerializable
+class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface, JsonSerializable
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -24,12 +24,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     private string $email;
     #[ORM\Column(type: 'string')]
     private string $password;
-
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $createdAt;
-
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $updatedAt;
 
     public function __construct(string $name, string $email, string $password)
     {
@@ -82,28 +76,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         $this->password = $password;
         $this->updatedAt = new DateTime();
 
-        return $this;
-    }
-
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(DateTime $createdAt): User
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(DateTime $updatedAt): User
-    {
-        $this->updatedAt = $updatedAt;
         return $this;
     }
 
