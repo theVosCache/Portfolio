@@ -14,6 +14,7 @@ use App\Validator\Domain\RequestValidators\RoleCreateRequestValidator;
 use App\Validator\Domain\WrongRequestValidatorException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RoleCreateController implements PostControllerInterface
 {
@@ -21,12 +22,13 @@ class RoleCreateController implements PostControllerInterface
     private RequestValidatorInterface $data;
 
     public function __construct(
-        private RoleRepositoryInterface $roleRepository,
-        private EntityManagerInterface $entityManager
+        private readonly RoleRepositoryInterface $roleRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
     }
 
-    public function __invoke()
+    #[Route(path: '/role/create', name: 'role_create')]
+    public function __invoke(): JsonResponse
     {
         try {
             $this->roleRepository->findBySlug($this->data->slug);
@@ -44,7 +46,7 @@ class RoleCreateController implements PostControllerInterface
             slug: $this->data->slug
         );
 
-        $this->entityManager->persist(object: $role);
+        $this->entityManager->persist($role);
         $this->entityManager->flush();
 
         return new JsonResponse(data: [], status: JsonResponse::HTTP_CREATED);
