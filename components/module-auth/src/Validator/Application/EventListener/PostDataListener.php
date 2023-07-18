@@ -7,6 +7,7 @@ namespace App\Validator\Application\EventListener;
 use App\Validator\Application\Manager\RequestValidatorManager;
 use App\Validator\Domain\Enums\RequestStatusEnum;
 use App\Validator\Domain\PostControllerInterface;
+use App\Validator\Domain\WrongRequestValidatorException;
 use Exception;
 use JsonException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -45,7 +46,16 @@ class PostDataListener implements EventSubscriberInterface
                     );
 
                     if ($requestValidator !== false) {
-                        $controller->setData($requestValidator);
+                        try {
+                            $controller->setData($requestValidator);
+                        } catch (WrongRequestValidatorException $e) {
+                            $event->setController(function () use ($e) {
+                                return new JsonResponse(data: [
+                                    'Status' => RequestStatusEnum::ERROR,
+                                    'Message' => $e->getMessage()
+                                ], status: JsonResponse::HTTP_BAD_REQUEST);
+                            });
+                        }
                     } else {
                         $event->setController(function () {
                             return new JsonResponse(data: [

@@ -11,13 +11,14 @@ use App\Validator\Domain\Enums\RequestStatusEnum;
 use App\Validator\Domain\PostControllerInterface;
 use App\Validator\Domain\RequestValidatorInterface;
 use App\Validator\Domain\RequestValidators\UserRegisterRequestValidator;
+use App\Validator\Domain\WrongRequestValidatorException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController implements PostControllerInterface
 {
-    private UserRegisterRequestValidator $requestValidator;
+    private UserRegisterRequestValidator $data;
 
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
@@ -30,7 +31,7 @@ class RegisterController implements PostControllerInterface
     public function __invoke(): JsonResponse
     {
         try {
-            $this->userRepository->findByEmail($this->requestValidator->email);
+            $this->userRepository->findByEmail($this->data->email);
 
             return new JsonResponse(data: [
                 'status' => RequestStatusEnum::ERROR,
@@ -41,9 +42,9 @@ class RegisterController implements PostControllerInterface
         }
 
         $user = $this->userFactory->create(
-            name: $this->requestValidator->name,
-            email: $this->requestValidator->email,
-            password: $this->requestValidator->password
+            name: $this->data->name,
+            email: $this->data->email,
+            password: $this->data->password
         );
 
         $this->entityManager->persist($user);
@@ -56,8 +57,18 @@ class RegisterController implements PostControllerInterface
         ], status: JsonResponse::HTTP_OK);
     }
 
+    /** @throws WrongRequestValidatorException */
     public function setData(RequestValidatorInterface $data): void
     {
-        $this->requestValidator = $data;
+        if (!($data instanceof UserRegisterRequestValidator)) {
+            throw new WrongRequestValidatorException(
+                message: sprintf(
+                    "Wrong validator assign, expected RegisterRequest got %s",
+                    $data::class
+                )
+            );
+        }
+
+        $this->data = $data;
     }
 }

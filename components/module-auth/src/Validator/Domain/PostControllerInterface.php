@@ -6,5 +6,6 @@ namespace App\Validator\Domain;
 
 interface PostControllerInterface
 {
+    /** @throws WrongRequestValidatorException */
     public function setData(RequestValidatorInterface $data);
 }

@@ -11,14 +11,14 @@ use App\Validator\Domain\Enums\RequestStatusEnum;
 use App\Validator\Domain\PostControllerInterface;
 use App\Validator\Domain\RequestValidatorInterface;
 use App\Validator\Domain\RequestValidators\UserLoginRequestValidator;
-use App\Validator\Domain\RequestValidators\UserRegisterRequestValidator;
+use App\Validator\Domain\WrongRequestValidatorException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LoginController implements PostControllerInterface
 {
-    private UserLoginRequestValidator $requestValidator;
+    private RequestValidatorInterface $data;
 
     public function __construct(
         private readonly UserJWTTokenGeneratorService $tokenGeneratorService,
@@ -31,7 +31,7 @@ class LoginController implements PostControllerInterface
     public function __invoke(): JsonResponse
     {
         try {
-            $user = $this->userRepository->findByEmail(email: $this->requestValidator->email);
+            $user = $this->userRepository->findByEmail(email: $this->data->email);
         } catch (UserNotFoundException $e) {
             return new JsonResponse(data: [
                 'status' => RequestStatusEnum::ERROR,
@@ -39,7 +39,7 @@ class LoginController implements PostControllerInterface
             ], status: JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        if (!$this->userPasswordHasher->isPasswordValid($user, $this->requestValidator->password)) {
+        if (!$this->userPasswordHasher->isPasswordValid($user, $this->data->password)) {
             return new JsonResponse(data: [
                 'status' => RequestStatusEnum::ERROR,
                 'message' => 'Wrong combination'
@@ -55,8 +55,18 @@ class LoginController implements PostControllerInterface
         ]);
     }
 
+    /** @throws WrongRequestValidatorException */
     public function setData(RequestValidatorInterface $data): void
     {
-        $this->requestValidator = $data;
+        if (!($data instanceof UserLoginRequestValidator)) {
+            throw new WrongRequestValidatorException(
+                message: sprintf(
+                    "Wrong validator assign, expected LoginRequest got %s",
+                    $data::class
+                )
+            );
+        }
+
+        $this->data = $data;
     }
 }

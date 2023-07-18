@@ -8,7 +8,9 @@ use App\Auth\Application\Service\UserJWTTokenGeneratorService;
 use App\Auth\Domain\Entity\User;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Infrastructure\Controller\UserController\LoginController;
+use App\Validator\Domain\RequestValidatorInterface;
 use App\Validator\Domain\RequestValidators\UserLoginRequestValidator;
+use App\Validator\Domain\WrongRequestValidatorException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,6 +33,22 @@ class LoginControllerTest extends TestCase
         $this->assertArrayHasKey(key: 'ttl', array: $array);
         $this->assertArrayHasKey(key: 'type', array: $array);
         $this->assertArrayHasKey(key: 'token', array: $array);
+    }
+
+    /** @test */
+    public function aWrongRequestValidatorExceptionIsThrownWhenRequestValidatorWronglyAssigned(): void
+    {
+        $this->expectException(WrongRequestValidatorException::class);
+
+        $controller = new LoginController(
+            tokenGeneratorService: $this->createMock(UserJWTTokenGeneratorService::class),
+            userRepository: $this->createMock(UserRepositoryInterface::class),
+            userPasswordHasher: $this->createMock(UserPasswordHasherInterface::class)
+        );
+
+        $requestValidator = $this->createMock(RequestValidatorInterface::class);
+
+        $controller->setData($requestValidator);
     }
 
     private function getLoginController(): LoginController
