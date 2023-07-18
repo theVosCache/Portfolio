@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\Entity;
 
+use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity(repositoryClass: RoleRepositoryInterface::class)]
 class Role extends AbstractEntity
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: 'integer')]
     private int $id;
 
+    #[ORM\Column(type: 'string')]
     private string $name;
 
+    #[ORM\Column(type: 'string')]
     private string $slug;
 
     public function __construct(string $name, string $slug)

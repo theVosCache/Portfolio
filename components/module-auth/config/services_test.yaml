@@ -16,3 +16,4 @@ services:
   test.App\Auth\Application\Service\UserJWTTokenGeneratorService: '@App\Auth\Application\Service\UserJWTTokenGeneratorService'
 
   test.App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Domain\Repository\UserRepositoryInterface'
+  test.App\Auth\Domain\Repository\RoleRepositoryInterface: '@App\Auth\Domain\Repository\RoleRepositoryInterface'
