@@ -18,7 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController implements PostControllerInterface
 {
-    private UserRegisterRequestValidator $data;
+    /** @var UserRegisterRequestValidator $data */
+    private RequestValidatorInterface $data;
 
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,

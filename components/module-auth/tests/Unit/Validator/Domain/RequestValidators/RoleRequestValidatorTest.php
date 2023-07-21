@@ -16,7 +16,7 @@ class RoleRequestValidatorTest extends KernelTestCase
         $validator = new RoleRequestValidator();
 
         $this->assertSame(
-            expected: 'RoleCreateRequest',
+            expected: 'RoleRequest',
             actual: $validator->getRequestName()
         );
     }

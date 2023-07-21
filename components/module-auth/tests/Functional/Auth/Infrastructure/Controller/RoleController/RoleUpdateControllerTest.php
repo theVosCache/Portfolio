@@ -18,7 +18,7 @@ class RoleUpdateControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/role/update/1',
             content: json_encode(value: [
-                'type' => 'RoleCreateRequest',
+                'type' => 'RoleRequest',
                 'data' => [
                     'name' => 'New Role',
                     'slug' => 'new-role'

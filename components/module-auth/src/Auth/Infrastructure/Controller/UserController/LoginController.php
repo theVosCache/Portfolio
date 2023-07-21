@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LoginController implements PostControllerInterface
 {
+    /** @var UserLoginRequestValidator $data */
     private RequestValidatorInterface $data;
 
     public function __construct(

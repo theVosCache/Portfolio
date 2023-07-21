@@ -18,7 +18,7 @@ class RoleCreateControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/role/create',
             content: json_encode(value: [
-                'type' => 'RoleCreateRequest',
+                'type' => 'RoleRequest',
                 'data' => [
                     'name' => 'New Role',
                     'slug' => 'new-role'
@@ -38,7 +38,7 @@ class RoleCreateControllerTest extends DbWebTestCase
             method: 'POST',
             uri: '/role/create',
             content: json_encode(value: [
-                'type' => 'RoleCreateRequest',
+                'type' => 'RoleRequest',
                 'data' => [
                     'name' => 'Test Role2',
                     'slug' => 'test-role'

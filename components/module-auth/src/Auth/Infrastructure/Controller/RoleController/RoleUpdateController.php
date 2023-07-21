@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RoleUpdateController implements PostControllerInterface
 {
+    /** @var RoleRequestValidator $data */
     private RequestValidatorInterface $data;
 
     public function __construct(

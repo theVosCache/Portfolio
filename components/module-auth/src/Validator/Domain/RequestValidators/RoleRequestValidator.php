@@ -27,6 +27,6 @@ class RoleRequestValidator implements RequestValidatorInterface
 
     public function getRequestName(): string
     {
-        return 'RoleCreateRequest';
+        return 'RoleRequest';
     }
 }
