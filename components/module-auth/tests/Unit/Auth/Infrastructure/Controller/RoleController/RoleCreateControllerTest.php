@@ -9,7 +9,7 @@ use App\Auth\Domain\Exception\RoleNotFoundException;
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use App\Auth\Infrastructure\Controller\RoleController\RoleCreateController;
 use App\Validator\Domain\RequestValidatorInterface;
-use App\Validator\Domain\RequestValidators\RoleCreateRequestValidator;
+use App\Validator\Domain\RequestValidators\RoleRequestValidator;
 use App\Validator\Domain\WrongRequestValidatorException;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -61,7 +61,7 @@ class RoleCreateControllerTest extends TestCase
             entityManager: $this->getEntityManagerMock(roleFound: $roleFound)
         );
 
-        $validator = new RoleCreateRequestValidator();
+        $validator = new RoleRequestValidator();
         $validator->setData(data: [
             'name' => 'New Role',
             'slug' => 'new-role'

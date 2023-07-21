@@ -7,7 +7,7 @@ namespace App\Validator\Domain\RequestValidators;
 use App\Validator\Domain\RequestValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RoleCreateRequestValidator implements RequestValidatorInterface
+class RoleRequestValidator implements RequestValidatorInterface
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]

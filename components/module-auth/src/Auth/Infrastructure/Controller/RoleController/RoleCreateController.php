@@ -10,7 +10,7 @@ use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use App\Validator\Domain\Enums\RequestStatusEnum;
 use App\Validator\Domain\PostControllerInterface;
 use App\Validator\Domain\RequestValidatorInterface;
-use App\Validator\Domain\RequestValidators\RoleCreateRequestValidator;
+use App\Validator\Domain\RequestValidators\RoleRequestValidator;
 use App\Validator\Domain\WrongRequestValidatorException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RoleCreateController implements PostControllerInterface
 {
-    /** @var RoleCreateRequestValidator $data */
+    /** @var RoleRequestValidator $data */
     private RequestValidatorInterface $data;
 
     public function __construct(
@@ -54,7 +54,7 @@ class RoleCreateController implements PostControllerInterface
 
     public function setData(RequestValidatorInterface $data): void
     {
-        if (!($data instanceof RoleCreateRequestValidator)) {
+        if (!($data instanceof RoleRequestValidator)) {
             throw new WrongRequestValidatorException(
                 message: sprintf(
                     "Wrong validator assign, expected RoleCreateRequest got %s",

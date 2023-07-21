@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Validator\Domain\RequestValidators;
 
-use App\Validator\Domain\RequestValidators\RoleCreateRequestValidator;
+use App\Validator\Domain\RequestValidators\RoleRequestValidator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class RoleCreateRequestValidatorTest extends KernelTestCase
+class RoleRequestValidatorTest extends KernelTestCase
 {
     /** @test */
     public function theCorrectRequestNameIsReturned(): void
     {
-        $validator = new RoleCreateRequestValidator();
+        $validator = new RoleRequestValidator();
 
         $this->assertSame(
             expected: 'RoleCreateRequest',
@@ -30,7 +30,7 @@ class RoleCreateRequestValidatorTest extends KernelTestCase
         /** @var ValidatorInterface $innerValidator */
         $innerValidator = self::bootKernel()->getContainer()->get(id: 'test.validator');
 
-        $validator = new RoleCreateRequestValidator();
+        $validator = new RoleRequestValidator();
         $validator->setData(data: $data);
 
         $errors = $innerValidator->validate($validator);
