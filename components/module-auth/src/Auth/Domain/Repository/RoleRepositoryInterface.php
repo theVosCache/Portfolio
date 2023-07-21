@@ -11,4 +11,7 @@ interface RoleRepositoryInterface
 {
     /** @throws RoleNotFoundException */
     public function findBySlug(string $slug): Role;
+
+    /** @throws RoleNotFoundException */
+    public function findById(int $id): Role;
 }

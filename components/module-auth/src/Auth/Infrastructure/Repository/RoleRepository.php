@@ -33,4 +33,21 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
 
         return $user;
     }
+
+    /** @throws RoleNotFoundException */
+    public function findById(int $id): Role
+    {
+        $user = $this->findOneBy(['id' => $id]);
+
+        if (!($user instanceof Role)) {
+            throw new RoleNotFoundException(
+                message: sprintf(
+                    'Role with id %s not found',
+                    $id
+                )
+            );
+        }
+
+        return $user;
+    }
 }

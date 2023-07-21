@@ -23,6 +23,17 @@ class RoleRepositoryTest extends DbKernelTestCase
 
         $this->assertInstanceOf(expected: Role::class, actual: $role);
     }
+    /** @test */
+    public function aRoleCanBeFindById(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: [RoleFixture::class]);
+        /** @var RoleRepositoryInterface $roleRepository */
+        $roleRepository = self::bootKernel()->getContainer()->get(id: 'test.' . RoleRepositoryInterface::class);
+
+        $role = $roleRepository->findById(id: 1);
+
+        $this->assertInstanceOf(expected: Role::class, actual: $role);
+    }
 
     /** @test */
     public function aRoleNotFoundExceptionIsThrownWhenRoleNotFound(): void
@@ -33,6 +44,6 @@ class RoleRepositoryTest extends DbKernelTestCase
         /** @var RoleRepositoryInterface $roleRepository */
         $roleRepository = self::bootKernel()->getContainer()->get(id: 'test.' . RoleRepositoryInterface::class);
 
-        $roleRepository->findBySlug(slug: 'test-role');
+        $roleRepository->findById(id: 1);
     }
 }
