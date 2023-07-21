@@ -12,10 +12,6 @@ spec:
       labels:
         app: portfolio-auth
     spec:
-      volumes:
-        - name: shared-files
-          hostPath:
-            path: /home/matthijs/Project/MDV/portfolio/components/module-auth
       containers:
         - name: portfolio-auth-nginx
           image: portfolio-auth-nginx:latest
@@ -29,9 +25,6 @@ spec:
           ports:
             - name: php-fpm
               containerPort: 9000
-          volumeMounts:
-            - name: shared-files
-              mountPath: /app
           resources:
             requests:
               cpu: 100m

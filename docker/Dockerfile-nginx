@@ -1,0 +1,13 @@
+# ======================
+# Base stage
+# ======================
+
+FROM nginx:latest as base
+
+COPY docker/nginx-k3s.conf /etc/nginx/conf.d/default.conf
+
+COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
+
+COPY components/module-auth /app
+
+WORKDIR /app

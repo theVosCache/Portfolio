@@ -1,0 +1,20 @@
+# ======================
+# Base stage
+# ======================
+
+FROM php:8.2-fpm as base
+
+RUN apt-get update
+RUN apt-get install -y g++ git libicu-dev zip zlib1g-dev libzip-dev zip
+RUN docker-php-ext-install zip intl opcache pdo_mysql
+RUN pecl install apcu xdebug
+RUN docker-php-ext-enable apcu xdebug
+
+# Install composer
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+COPY components/module-auth/ /app
+
+WORKDIR /app
