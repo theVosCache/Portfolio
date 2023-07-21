@@ -6,7 +6,7 @@ namespace App\Tests\Functional\Auth\Infrastructure\Controller\RoleController;
 
 use App\Tests\DataFixtures\RoleFixture;
 use App\Tests\DbWebTestCase;
-use ECSPrefix202306\Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoleCreateControllerTest extends DbWebTestCase
 {
