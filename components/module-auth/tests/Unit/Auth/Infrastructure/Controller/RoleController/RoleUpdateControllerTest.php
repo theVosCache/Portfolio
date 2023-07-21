@@ -7,23 +7,30 @@ namespace App\Tests\Unit\Auth\Infrastructure\Controller\RoleController;
 use App\Auth\Domain\Entity\Role;
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use App\Auth\Infrastructure\Controller\RoleController\RoleCreateController;
+use App\Auth\Infrastructure\Controller\RoleController\RoleUpdateController;
 use App\Validator\Domain\RequestValidators\RoleRequestValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RoleUpdateControllerTest extends TestCase
 {
     /** @test */
     public function aRoleUpdateCanBeHandled(): void
     {
-    }
+        $controller = $this->getRoleUpdateController();
 
+        $response = $controller(roleId: 1);
+
+        $this->assertInstanceOf(expected: JsonResponse::class, actual: $response);
+        $this->assertSame(expected: JsonResponse::HTTP_NO_CONTENT, actual: $response->getStatusCode());
+    }
 
     private function getRoleUpdateController(): RoleUpdateController
     {
         $controller = new RoleUpdateController(
             roleRepository: $this->getRoleRepositoryMock(),
-            entityManger: $this->getEntityManagerMock()
+            entityManager: $this->getEntityManagerMock()
         );
 
         $validator = new RoleRequestValidator();
@@ -32,7 +39,7 @@ class RoleUpdateControllerTest extends TestCase
             'slug' => 'test-role'
         ]);
 
-        $controller->setData($validator);
+        $controller->setData(data: $validator);
 
         return $controller;
     }
@@ -41,17 +48,17 @@ class RoleUpdateControllerTest extends TestCase
     {
         $repository = $this->createMock(originalClassName: RoleRepositoryInterface::class);
 
-        $role = $this->createMock(Role::class);
+        $role = $this->createMock(originalClassName: Role::class);
 
         $role->expects($this->once())
             ->method(constraint: 'setName')
-            ->willReturn($role);
+            ->willReturn(value: $role);
         $role->expects($this->once())
             ->method(constraint: 'setSlug')
-            ->willReturn($role);
+            ->willReturn(value: $role);
 
         $repository->expects($this->once())
-            ->method(constraint: 'findBySlug')
+            ->method(constraint: 'findById')
             ->willReturn(value: $role);
 
         return $repository;

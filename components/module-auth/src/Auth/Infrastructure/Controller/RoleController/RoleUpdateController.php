@@ -26,11 +26,16 @@ class RoleUpdateController implements PostControllerInterface
     ) {
     }
 
-    #[Route(path: '/role/update/{role_id}', name: 'role_create')]
-    public function __invoke(): JsonResponse
+    #[Route(path: '/role/update/{roleId}', name: 'role_update')]
+    public function __invoke(int $roleId): JsonResponse
     {
         try {
-            $this->roleRepository->findBySlug($this->data->slug);
+            $role = $this->roleRepository->findById(id: $roleId);
+
+            $role->setName($this->data->name)
+                ->setSlug($this->data->slug);
+
+            $this->entityManager->flush();
         } catch (RoleNotFoundException) {
             return new JsonResponse([
                 'status' => RequestStatusEnum::ERROR,
@@ -38,15 +43,7 @@ class RoleUpdateController implements PostControllerInterface
             ], status: JsonResponse::HTTP_BAD_REQUEST);
         }
 
-        $role = new Role(
-            name: $this->data->name,
-            slug: $this->data->slug
-        );
-
-        $this->entityManager->persist($role);
-        $this->entityManager->flush();
-
-        return new JsonResponse(data: [], status: JsonResponse::HTTP_CREATED);
+        return new JsonResponse(data: [], status: JsonResponse::HTTP_NO_CONTENT);
     }
 
     public function setData(RequestValidatorInterface $data): void
