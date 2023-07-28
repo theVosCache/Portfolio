@@ -10,5 +10,8 @@ use App\Auth\Domain\Exception\UserNotFoundException;
 interface UserRepositoryInterface
 {
     /** @throws UserNotFoundException */
+    public function findById(int $id): User;
+
+    /** @throws UserNotFoundException */
     public function findByEmail(string $email): User;
 }

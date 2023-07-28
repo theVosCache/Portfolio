@@ -19,6 +19,23 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     }
 
     /** @throws UserNotFoundException */
+    public function findById(int $id): User
+    {
+        $user = $this->findOneBy(['id' => $id]);
+
+        if (!($user instanceof User)) {
+            throw new UserNotFoundException(
+                message: sprintf(
+                    'User with id %s not found',
+                    $id
+                )
+            );
+        }
+
+        return $user;
+    }
+
+    /** @throws UserNotFoundException */
     public function findByEmail(string $email): User
     {
         $user = $this->findOneBy(['email' => $email]);
