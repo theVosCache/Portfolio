@@ -11,7 +11,7 @@ use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Validator\Domain\RequestValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class UserAddRoleRequestValidator implements RequestValidatorInterface
+class UserRoleRequestValidator implements RequestValidatorInterface
 {
     #[Assert\NotBlank]
     #[Assert\Type(type: 'integer')]

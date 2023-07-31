@@ -9,12 +9,13 @@ use App\Auth\Domain\Entity\User;
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Infrastructure\Controller\UserController\AddRoleController;
+use App\Auth\Infrastructure\Controller\UserController\RemoveRoleController;
 use App\Validator\Domain\RequestValidators\UserRoleRequestValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AddRoleControllerTest extends TestCase
+class RemoveRoleControllerTest extends TestCase
 {
     /** @test */
     public function aAddRoleCanBeHandled(): void
@@ -27,9 +28,9 @@ class AddRoleControllerTest extends TestCase
         $this->assertSame(expected: JsonResponse::HTTP_CREATED, actual: $response->getStatusCode());
     }
 
-    private function getAddRoleController(): AddRoleController
+    private function getAddRoleController(): RemoveRoleController
     {
-        $addRoleController = new AddRoleController(
+        $addRoleController = new RemoveRoleController(
             userRepository: $this->getUserRepositoryMock(),
             roleRepository: $this->getRoleRepositoryMock(),
             entityManager: $this->createMock(EntityManagerInterface::class)

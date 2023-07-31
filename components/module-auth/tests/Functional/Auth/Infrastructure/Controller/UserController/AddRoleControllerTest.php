@@ -8,7 +8,7 @@ use App\Tests\DataFixtures\RoleFixture;
 use App\Tests\DataFixtures\UserFixture;
 use App\Tests\DbWebTestCase;
 
-class AddRoleController extends DbWebTestCase
+class AddRoleControllerTest extends DbWebTestCase
 {
     /** @test */
     public function aUserAddRoleRequestCanBeHandled(): void

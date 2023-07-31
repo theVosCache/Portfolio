@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AddRoleController implements PostControllerInterface
+class RemoveRoleController implements PostControllerInterface
 {
     /** @var UserRoleRequestValidator $data */
     private RequestValidatorInterface $data;
@@ -26,13 +26,13 @@ class AddRoleController implements PostControllerInterface
     ) {
     }
 
-    #[Route(path: '/user/add-role', name: 'user_add_role')]
+    #[Route(path: '/user/remove-role', name: 'user_remove_role')]
     public function __invoke(): JsonResponse
     {
         $user = $this->userRepository->findById(id: $this->data->user);
         $role = $this->roleRepository->findById(id: $this->data->role);
 
-        $user->addRole(role: $role);
+        $user->removeRole(role: $role);
 
         $this->entityManager->flush();
 

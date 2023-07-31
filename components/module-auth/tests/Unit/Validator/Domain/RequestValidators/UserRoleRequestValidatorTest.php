@@ -10,16 +10,16 @@ use App\Auth\Domain\Exception\RoleNotFoundException;
 use App\Auth\Domain\Exception\UserNotFoundException;
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
-use App\Validator\Domain\RequestValidators\UserAddRoleRequestValidator;
+use App\Validator\Domain\RequestValidators\UserRoleRequestValidator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class UserAddRoleRequestValidatorTest extends KernelTestCase
+class UserRoleRequestValidatorTest extends KernelTestCase
 {
     /** @test */
     public function theCorrectRequestNameIsReturned(): void
     {
-        $validator = new UserAddRoleRequestValidator(
+        $validator = new UserRoleRequestValidator(
             userRepository: $this->createMock(UserRepositoryInterface::class),
             roleRepository: $this->createMock(RoleRepositoryInterface::class)
         );
@@ -43,7 +43,7 @@ class UserAddRoleRequestValidatorTest extends KernelTestCase
         /** @var ValidatorInterface $innerValidator */
         $innerValidator = self::bootKernel()->getContainer()->get('test.validator');
 
-        $validator = new UserAddRoleRequestValidator(
+        $validator = new UserRoleRequestValidator(
             userRepository: $this->getUserRepository(userFound: $userFound),
             roleRepository: $this->getRoleRepository(roleFound: $roleFound)
         );
