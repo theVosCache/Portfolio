@@ -6,6 +6,7 @@ namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoleRepositoryInterface::class)]
@@ -21,6 +22,10 @@ class Role extends AbstractEntity
 
     #[ORM\Column(type: 'string')]
     private string $slug;
+
+    /** @var Collection<int, User> */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
+    private Collection $users;
 
     public function __construct(string $name, string $slug)
     {

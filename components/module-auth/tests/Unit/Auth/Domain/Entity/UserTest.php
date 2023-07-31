@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Auth\Domain\Entity;
 
+use App\Auth\Domain\Entity\Role;
 use App\Auth\Domain\Entity\User;
 use App\Tests\PrivatePropertyManipulator;
 use DateTime;
@@ -52,5 +53,38 @@ class UserTest extends TestCase
         $this->assertSame(expected: 'de@bug.nl', actual: $user->getEmail());
         $this->assertSame(expected: 'testtest', actual: $user->getPassword());
         $this->assertNotSame(expected: '2023-01-01 00:00:00', actual: $user->getUpdatedAt()->format(format: 'Y-m-d H:i:s'));
+    }
+
+    /** @test */
+    public function aUserCanBeAssignedARole(): void
+    {
+        $role = $this->createMock(originalClassName: Role::class);
+        $user = new User(
+            name: 'test de tester',
+            email: 'test@test.nl',
+            password: 'test'
+        );
+
+        $this->assertCount(expectedCount: 1, haystack: $user->getRoles());
+
+        $user->addRole($role);
+
+        $this->assertCount(expectedCount: 2, haystack: $user->getRoles());
+    }
+
+    /** @test */
+    public function aUserCanBeUnassignedARole(): void
+    {
+        $role = $this->createMock(originalClassName: Role::class);
+        $user = new User(
+            name: 'test de tester',
+            email: 'test@test.nl',
+            password: 'test'
+        );
+        $user->addRole($role);
+
+        $this->assertCount(expectedCount: 2, haystack: $user->getRoles());
+
+        $user->removeRole($role);
     }
 }

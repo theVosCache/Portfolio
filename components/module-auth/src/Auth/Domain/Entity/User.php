@@ -6,6 +6,8 @@ namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -25,11 +27,18 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\Column(type: 'string')]
     private string $password;
 
+    /** @var Collection<int, Role> */
+    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'users')]
+    #[ORM\JoinTable(name: 'user_role')]
+    private Collection $roles;
+
     public function __construct(string $name, string $email, string $password)
     {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+
+        $this->roles = new ArrayCollection();
 
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
@@ -81,7 +90,31 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        $roles = ['ROLE_USER'];
+
+        foreach ($this->roles as $role) {
+            $roles[] = $role;
+        }
+
+        return $roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        if ($this->roles->contains($role)) {
+            return $this;
+        }
+
+        $this->roles->add($role);
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        $index = $this->roles->indexOf($role);
+        $this->roles->remove($index);
+
+        return $this;
     }
 
     public function eraseCredentials()

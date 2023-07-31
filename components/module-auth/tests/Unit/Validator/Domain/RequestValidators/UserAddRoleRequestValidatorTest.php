@@ -11,7 +11,6 @@ use App\Auth\Domain\Exception\UserNotFoundException;
 use App\Auth\Domain\Repository\RoleRepositoryInterface;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Validator\Domain\RequestValidators\UserAddRoleRequestValidator;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
