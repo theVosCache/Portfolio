@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/i-am-alive', name: 'i-am-alive')]
+#[Route(path: '/i-am-alive', name: 'i-am-alive', methods: ['GET'])]
 class IAmAliveController extends AbstractController
 {
     public function __construct(
