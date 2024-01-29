@@ -15,11 +15,23 @@ class MariaDbUserRepositoryTest extends DbKernelTestCase
     /** @test */
     public function aUserCanBeRetrievedByEmailFromTheDatabase(): void
     {
-        $this->databaseTool->loadFixtures([UserFixture::class]);
+        $this->databaseTool->loadFixtures(classNames: [UserFixture::class]);
         /** @var UserRepositoryInterface $repository */
         $repository = self::bootKernel()->getContainer()->get(id: 'test.' . UserRepositoryInterface::class);
 
-        $user = $repository->findByEmail('test@test.nl');
+        $user = $repository->findByEmail(email: 'test@test.nl');
+
+        $this->assertInstanceOf(expected: User::class, actual: $user);
+    }
+
+    /** @test */
+    public function aUserCanBeRetrievedByUuidFromTheDatabase(): void
+    {
+        $this->databaseTool->loadFixtures(classNames: [UserFixture::class]);
+        /** @var UserRepositoryInterface $repository */
+        $repository = self::bootKernel()->getContainer()->get(id: 'test.' . UserRepositoryInterface::class);
+
+        $user = $repository->findByUuid(uuid: UserFixture::TEST_USER_UUID);
 
         $this->assertInstanceOf(expected: User::class, actual: $user);
     }

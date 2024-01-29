@@ -5,19 +5,22 @@ declare(strict_types=1);
 namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\UserRepositoryInterface;
+use App\Common\Domain\Trait\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
 class User
 {
+    use UuidTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    #[ORM\Column(type: "uuid", unique: true)]
-    private string $uuid;
+    //    #[ORM\Column(type: "uuid", unique: true)]
+    //    private string $uuid;
 
     #[ORM\Column(type: 'string')]
     private string $name;
@@ -39,10 +42,10 @@ class User
         return $this->id ?? null;
     }
 
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
+    //    public function getUuid(): string
+    //    {
+    //        return $this->uuid;
+    //    }
 
     public function getName(): string
     {

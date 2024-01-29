@@ -15,6 +15,8 @@ class UserFixture extends Fixture
 {
     use PrivatePropertyManipulator;
 
+    public const TEST_USER_UUID = "3f96c38b-0e0a-48bd-bf18-d1c2b63b4760";
+
     public function __construct(
         //        private UserPasswordHasherInterface $hasher
     ) {
@@ -31,7 +33,7 @@ class UserFixture extends Fixture
         //        $user->setPassword(password: $this->hasher->hashPassword(user: $user, plainPassword: 'testtest'));
 
         $this->setByReflection(object: $user, property: 'id', value: 1);
-        $this->setByReflection(object: $user, property: 'uuid', value: Uuid::uuid4()->toString());
+        $this->setByReflection(object: $user, property: 'uuid', value: self::TEST_USER_UUID);
 
         $manager->persist($user);
         $manager->flush();

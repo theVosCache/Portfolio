@@ -20,4 +20,9 @@ class MariaDbUserRepository extends ServiceEntityRepository implements UserRepos
     {
         return $this->findOneBy(['email' => $email]);
     }
+
+    public function findByUuid(string $uuid): ?User
+    {
+        return $this->findOneBy(['uuid' => $uuid]);
+    }
 }
