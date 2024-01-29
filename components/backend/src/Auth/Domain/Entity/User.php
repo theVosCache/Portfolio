@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\UserRepositoryInterface;
+use App\Auth\Infrastructure\Repository\MariaDbUserRepository;
 use App\Common\Domain\Entity\AbstractEntity;
 use App\Common\Domain\Trait\Timestamps;
 use App\Common\Domain\Trait\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
+#[ORM\Entity(repositoryClass: MariaDbUserRepository::class)]
 class User extends AbstractEntity
 {
     use Uuid, Timestamps;
