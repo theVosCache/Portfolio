@@ -5,8 +5,16 @@ services:
     autowire: true
     autoconfigure: true
 
+  Ramsey\Uuid\Doctrine\UuidGenerator:
+
+  App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Infrastructure\Repository\MariaDbUserRepository'
+
   App\IAmAlive\Infrastructure\Controller\IAmAliveController:
     arguments:
       $buildNumber: '%env(BUILD_NUMBER)%'
       $commitHash: '%env(COMMIT_HASH)%'
     tags: [ 'controller.service_arguments' ]
+
+  App\Auth\Infrastructure\Repository\:
+    resource: '../src/Auth/Infrastructure/Repository/'
+    tags: [ 'doctrine.repository_service' ]

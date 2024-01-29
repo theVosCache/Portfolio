@@ -1,0 +1,17 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  App\Tests\DataFixtures\:
+    resource: '../tests/DataFixtures'
+    tags: [ 'doctrine.fixture.orm' ]
+
+#  test.Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface: '@lexik_jwt_authentication.encoder.lcobucci'
+#  test.App\Auth\Application\Service\UserJWTTokenGeneratorService: '@App\Auth\Application\Service\UserJWTTokenGeneratorService'
+
+  test.App\Auth\Domain\Repository\UserRepositoryInterface: '@App\Auth\Domain\Repository\UserRepositoryInterface'
+#  test.App\Auth\Domain\Repository\RoleRepositoryInterface: '@App\Auth\Domain\Repository\RoleRepositoryInterface'
