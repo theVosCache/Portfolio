@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Common\Domain\Trait;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Uuid as RamseyUuid;
 
-trait UuidTrait
+trait Uuid
 {
     #[ORM\Column(type: "uuid", unique: true)]
     private string $uuid;
 
-    protected function bootUuidTrait(): void
+    protected function bootUuid(): void
     {
-        $this->uuid = Uuid::uuid4()->toString();
+        $this->uuid = RamseyUuid::uuid4()->toString();
     }
 
     public function getUuid(): string

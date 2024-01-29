@@ -5,22 +5,20 @@ declare(strict_types=1);
 namespace App\Auth\Domain\Entity;
 
 use App\Auth\Domain\Repository\UserRepositoryInterface;
-use App\Common\Domain\Trait\UuidTrait;
+use App\Common\Domain\Entity\AbstractEntity;
+use App\Common\Domain\Trait\Timestamps;
+use App\Common\Domain\Trait\Uuid;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
-class User
+class User extends AbstractEntity
 {
-    use UuidTrait;
+    use Uuid, Timestamps;
 
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
-
-    //    #[ORM\Column(type: "uuid", unique: true)]
-    //    private string $uuid;
 
     #[ORM\Column(type: 'string')]
     private string $name;
@@ -31,7 +29,7 @@ class User
 
     public function __construct(string $name, string $email, string $password)
     {
-        $this->uuid = Uuid::uuid4()->toString();
+        parent::__construct();
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
@@ -41,11 +39,6 @@ class User
     {
         return $this->id ?? null;
     }
-
-    //    public function getUuid(): string
-    //    {
-    //        return $this->uuid;
-    //    }
 
     public function getName(): string
     {
